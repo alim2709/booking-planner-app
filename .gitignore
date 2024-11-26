@@ -2,3 +2,4 @@
 backend/.venv
 backend/.env
 backend/.idea
+frontend/node_modules
