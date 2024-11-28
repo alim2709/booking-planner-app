@@ -1,69 +1,81 @@
-footer {
-    font-family: "Barlow", sans-serif;
-    font-weight: 100;
-    font-style: normal;
-    color: #495461;
-    background-color: yellow;
-    padding-left: 7%;
-    padding-right: 7%;
-    max-width: 100%;
+.wrapper {
     display: flex;
-    flex-direction: row;
-    gap: 150px;
+    flex-direction: column;
+    min-height: 100vh;
 
-    .footer__left {
-        width: 25%;
+    footer {
+        font-family: "Barlow", sans-serif;
+        height: 280px;
+        font-weight: 100;
+        font-style: normal;
+        color: #0C2023;
+        background-color: white;
+        padding-left: 7%;
+        padding-right: 7%;
+        max-width: 100%;
         display: flex;
-        flex-direction: column;
-        margin-top: 30px;
-        .footer__info {
-            .footer__logo {
-                width: 121px;
-                margin-bottom: 24px;
-            }
-
-            .footer__description {
-                font-size: 16px;
-                margin-bottom: 40px;
-            }
-        }
-
-        .footer__socials {
+        flex-direction: row;
+        gap: 150px;
+    
+        .footer__left {
+            width: 25%;
             display: flex;
-            gap: 15px;
-            .footer__social-icon {
-                width: 25px;
-                margin-bottom: 24px;
+            flex-direction: column;
+            margin-top: 30px;
+            .footer__info {
+                .footer__logo {
+                    width: 121px;
+                    margin-bottom: 24px;
+                }
+    
+                .footer__description {
+                    font-size: 16px;
+                    margin-bottom: 40px;
+                }
             }
-        }
-    }
-
-    .footer__right {
-        width: 75%;
-        display: flex;
-        flex-direction: column;
-        margin-top: 30px;
-
-        .footer__links {
-            display: flex;
-            flex-direction: row;
-            gap: 100px;
-            margin-bottom: 110px;
-
-            .footer__link-section {
+    
+            .footer__socials {
                 display: flex;
-                flex-direction: column;
-                gap: 10px;
-
-                .footer__link {
-                    font-size: 20px;
-                    text-decoration: none;
+                gap: 15px;
+                .footer__social-icon {
+                    width: 25px;
+                    margin-bottom: 24px;
                 }
             }
         }
+    
+        .footer__right {
+            width: 75%;
+            display: flex;
+            flex-direction: column;
+            margin-top: 30px;
+    
+            .footer__links {
+                display: flex;
+                flex-direction: row;
+                gap: 100px;
+                margin-bottom: 110px;
+    
+                .footer__link-section {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+    
+                    .footer__link {
+                        font-size: 20px;
+                        text-decoration: none;
+                        color: #7A7A7A;
+                    }
 
-        .footer__copyright {
-            text-align: right;
+                    :hover {
+                        color: #46C3C6;
+                    }
+                }
+            }
+    
+            .footer__copyright {
+                text-align: right;
+            }
         }
     }
 }

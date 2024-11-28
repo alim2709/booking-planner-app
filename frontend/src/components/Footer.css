@@ -9,7 +9,7 @@ footer {
   max-width: 100%;
   display: flex;
   flex-direction: row;
-  gap: 130px;
+  gap: 150px;
 }
 footer .footer__left {
   width: 25%;
@@ -34,7 +34,26 @@ footer .footer__left .footer__socials .footer__social-icon {
   margin-bottom: 24px;
 }
 footer .footer__right {
+  width: 75%;
   display: flex;
   flex-direction: column;
   margin-top: 30px;
+}
+footer .footer__right .footer__links {
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+  margin-bottom: 110px;
+}
+footer .footer__right .footer__links .footer__link-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+footer .footer__right .footer__links .footer__link-section .footer__link {
+  font-size: 20px;
+  text-decoration: none;
+}
+footer .footer__right .footer__copyright {
+  text-align: right;
 }/*# sourceMappingURL=Footer.css.map */
