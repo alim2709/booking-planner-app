@@ -34,7 +34,7 @@ export const Footer = () => {
                     <div className="footer__link-section">
                         <a className="footer__link" href="/">Home</a>
                     </div>
-                    <div className="footer__link-section">
+                    <div className="footer__link-section footer__link-section--extra-gap">
                         <a className="footer__link" href="/">Profile</a>
                         <a className="footer__link" href="/">Meetings</a>
                         <a className="footer__link" href="/">Calendar</a>

@@ -6,8 +6,6 @@
     .footer {
         font-family: "Barlow", sans-serif;
         height: 280px;
-        font-weight: 100;
-        font-style: normal;
         color: #0C2023;
         background-color: white;
         padding-left: 7%;
@@ -77,6 +75,57 @@
     
             .footer__copyright {
                 text-align: right;
+            }
+        }
+    }
+
+    @media (max-width: 450px) {
+        .footer {
+            height: auto;
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            .footer__left {
+                width: 100%;
+                flex-direction: column;
+                .footer__info {
+                    .footer__logo {
+                        width: 100px;
+                    }
+        
+                    .footer__description {
+                        font-size: 15px;
+                    }
+                }
+            }
+        
+            .footer__right {
+                width: 100%;
+        
+                .footer__links {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    gap: 20px 140px;
+                    margin-bottom: 35px;
+        
+                    .footer__link-section {
+                        &--extra-gap {
+                            margin-left: 10px;
+                        }
+        
+                        .footer__link {
+                            font-size: 16px;
+                        }
+                    }
+                }
+        
+                .footer__copyright {
+                    text-align: center;
+                    margin-bottom: 25px;
+                }
             }
         }
     }
