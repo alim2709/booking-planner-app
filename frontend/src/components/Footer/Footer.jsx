@@ -1,10 +1,10 @@
 import React from "react";
 import './Footer.scss';
-import BeCodeLogo from "../assets/icons/BeCode_logo_BeCode_color.jpg";
-import Twitter from "../assets/icons/twitter-black-shape.png";
-import Facebook from "../assets/icons/facebook.png";
-import LinkedIn from "../assets/icons/linkedin.png";
-import Instagram from "../assets/icons/instagram.png";
+import BeCodeLogo from "../../assets/icons/BeCode_logo_BeCode_color.jpg";
+import Twitter from "../../assets/icons/twitter-black-shape.png";
+import Facebook from "../../assets/icons/facebook.png";
+import LinkedIn from "../../assets/icons/linkedin.png";
+import Instagram from "../../assets/icons/instagram.png";
 
 export const Footer = () => {
     return (
