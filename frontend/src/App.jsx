@@ -1,21 +1,26 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.scss";
 
 import { Footer } from "./components/Footer/Footer";
 import { LandingPage } from "./components/LandingPage/LandingPage";
 import { Header } from "./components/Header/Header";
+import NotFoundPage from "./pages/NotFoundPage";
 import { HomePage } from "./components/HomePage/HomePage";
 
 function App() {
     return (
-        <>
+        <Router>
             <div className="wrapper">
                 <Header />
-                <HomePage />
-                <LandingPage />
+                <Routes>
+                    <Route path="/" element={<LandingPage />} />
+                    <Route path="/home" element={<HomePage />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                </Routes>
                 <Footer />
             </div>
-        </>
+        </Router>
     );
 }
 
