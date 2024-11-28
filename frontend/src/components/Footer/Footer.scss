@@ -81,13 +81,7 @@
 
     @media (max-width: 980px) and (min-width: 451px) {
         .footer {
-            height: 260px;
-            padding-left: 7%;
-            padding-right: 7%;
-            max-width: 100%;
-            display: flex;
-            flex-direction: row;
-            gap: 90px;
+            gap: 50px;
         
             .footer__left {
                 .footer__info {
@@ -104,7 +98,7 @@
                 width: 70%;
         
                 .footer__links {
-                    gap: 90px;
+                    gap: 50px;
         
                     .footer__link-section {
                         .footer__link {
@@ -112,11 +106,16 @@
                         }
                     }
                 }
+
+                .footer__copyright {
+                    text-align: right;
+                    margin-right: 20px;
+                }
             }
         }
     }
 
-    @media (max-width: 450px) {
+    @media (max-width: 550px) {
         .footer {
             height: auto;
             max-width: 100%;
