@@ -1,13 +1,15 @@
 from fastapi import FastAPI
 
-app = FastAPI()
+from app.routers.availability import availability_router
+
+app = FastAPI(
+    title="Booking Planner API",
+    summary="API for managing users, availabilities, appointments",
+)
+
+app.include_router(availability_router)
 
 
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
-
-
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
