@@ -5,9 +5,9 @@
         height: auto;
         aspect-ratio: 2000 / 920;
         background-image: url(../../assets/images/premium_photo-1681505195930-388c317b7a76.jpg);
-        background-size: cover; /* Зображення заповнює секцію */
-        background-position: center; /* Центрування зображення */
-        background-repeat: no-repeat; /* Заборона повторення зображення */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 
     .main__overlay {
@@ -51,7 +51,7 @@
             .main__quote {
                 margin-top: 100px;
                 font-size: 24px;
-                padding: 0 25px;
+                padding: 0 25px 10px 25px;
             }
     
             .main__author {
