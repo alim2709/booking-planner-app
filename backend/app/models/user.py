@@ -1,10 +1,10 @@
-from datetime import datetime, timezone
+from datetime import datetime
 
 from app.database import Base
 from app.utils.enums import UserRole
 
 from sqlalchemy import Enum, DateTime
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
 class User(Base):
@@ -19,3 +19,7 @@ class User(Base):
     is_superuser: Mapped[bool] = mapped_column(nullable=False, default=False)
     role: Mapped[str] = mapped_column(Enum(UserRole), nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
+
+    availabilities: Mapped[list["Availability"]] = relationship(
+        "Availability", back_populates="coach"
+    )
