@@ -7,10 +7,10 @@ function App() {
     return (
         <>
             <div className="wrapper">
+                <Header />
                 <LandingPage />
                 <Footer />
             </div>
-            <Header />
         </>
     );
 }

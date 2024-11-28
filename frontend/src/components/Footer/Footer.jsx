@@ -11,7 +11,7 @@ export const Footer = () => {
         <footer className="footer">
             <div className="footer__left">
                 <div className="footer__info">
-                    <img className="footer__logo" src={ BeCodeLogo } alt="BeCode logo" />
+                    <a href="/"><img className="footer__logo" src={ BeCodeLogo } alt="BeCode logo" /></a>
                     <p className="footer__description">At BeCode, we make tech trainings accessible to all. We support, advise, train job seekers to become the tech talent of tomorrow and help companies to reskill / upskill their team or hire our talents.</p>
                 </div>
                 <div className="footer__socials">
