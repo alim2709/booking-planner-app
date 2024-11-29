@@ -1,5 +1,5 @@
 import React from "react";
-import BeCodeLogo from "../../assets/icons/BeCode_logo_BeCode_color.jpg";
+import BeCodeLogo from "../../assets/icons/BeCode_color.png";
 import "./LogInForm.scss";
 
 export const LogInForm = () => {
@@ -11,25 +11,27 @@ export const LogInForm = () => {
                     src={BeCodeLogo}
                     alt="BeCode logo"
                 />
-                <span className="login-form__title">Planning</span>
+                <span className="login-form__title"> Planning</span>
             </div>
-            <label className="login-form__label" htmlFor="login">Login</label>
-            <input
-                className="login-form__input"
-                type="text"
-                name="login"
-                id="login"
-                placeholder="Your login"
-            />
-            <label className="login-form__label" htmlFor="password">Password</label>
-            <input
-                className="login-form__input"
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Your password"
-            />
-            <button className="login-form__button">Submit</button>
+            <div className="login-form__main">
+                <label className="login-form__label" htmlFor="login"><strong>Login</strong></label>
+                <input
+                    className="login-form__input"
+                    type="text"
+                    name="login"
+                    id="login"
+                    placeholder="Your login"
+                />
+                <label className="login-form__label" htmlFor="password"><strong>Password</strong></label>
+                <input
+                    className="login-form__input"
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Your password"
+                />
+                <button className="login-form__button">Submit</button>
+            </div>
         </form>
     );
 };
