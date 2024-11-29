@@ -19,7 +19,7 @@
         background-color: rgba(70, 195, 198, 0.3);
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
 
         .main__quote {
             color: white;
@@ -27,6 +27,7 @@
             font-weight: 700;
             padding-left: 250px;
             padding-right: 250px;
+            margin-top: 180px;
         }
 
         .main__author {

@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import headerImage from "../../assets/icons/BeCode_color_header.png";
 
 import "./Header.scss";
 
-export const Header = () => {
+export const Header = ({ onOpenModal }) => {
     return (
         <div className="container">
             <header className="header">
@@ -19,7 +19,10 @@ export const Header = () => {
                     <span className="header__title">Planning</span>
                 </div>
                 <div className="header__actions">
-                    <a className="header__link header__link--login" href="#">
+                    <a className="header__link header__link--login" href="#" onClick={(e) => {
+                        e.preventDefault();
+                        onOpenModal();
+                    }}>
                         Log In
                     </a>
                     <a className="header__link header__link--signup" href="#">
