@@ -1,0 +1,54 @@
+.students-page {
+    margin-left: 5%;
+    margin-right: 5%;
+    max-width: 90%;
+    padding-top: 30px;
+    .students-page__title {
+        font-size: 40px;
+        margin-bottom: 40px;
+    }
+    .students-page__meetings {
+        .meeting {
+            display: flex;
+            justify-content: space-between;
+            background-color: #a1e8e8;
+            font-size: 22px;
+            margin-bottom: 20px;
+            padding: 20px 30px 20px 30px;
+            border: 1px solid #46c3c6;
+
+            .meeting__info {
+                .meeting__name {
+                    letter-spacing: 0.03em;
+                }
+                .meeting__date {
+                    color: #2fd0d4;
+                    font-weight: 700;
+                    font-size: 25px;
+                }
+                .meeting__time {
+                    font-weight: 700;
+                }
+            }
+            .meeting__actions {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                .meeting__action {
+                    color: white;
+                    background: #46c3c6;
+                    font-size: 21px;
+                    border-radius: 5px;
+                    padding: 3px 20px 3px 20px;
+                    border: 1px solid white;
+
+                    &--cancel {
+                        background: white;
+                        color: black;
+                        border: 1px solid #46c3c6;
+                    }
+                }
+            }
+        }
+    }
+}
