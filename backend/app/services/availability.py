@@ -17,3 +17,12 @@ class AvailabilityService:
         new_availability = await crud_availability.create_availability(data)
 
         return SAvailabilityModel.model_construct(new_availability)
+    
+    @classmethod
+    async def update_availability(cls, data: SAvailabilityModel):
+        if data.start_time >= data.end_time:
+            raise ValueError("Start time must be earlier than end time.")
+
+        updated_availability = await crud_availability.update_availability(data)
+
+        return SAvailabilityModel.model_construct(updated_availability)

@@ -24,4 +24,13 @@ class AvailabilityDB:
             session.add(availability)
             await session.commit()
 
-            return availability 
+            return availability
+        
+        
+    async def update_availability(self, data):
+        async with self.session() as session:
+            availability = Availability(**data.model_dump())
+            session.merge(availability)
+            await session.commit()
+
+            return availability

@@ -23,3 +23,11 @@ async def create_availability(data: SAvailabilityModel):
         return availability  
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
+    
+@availability_router.patch("/availabilities", response_model=SAvailabilityModel)
+async def update_availability(data: SAvailabilityModel):
+    try:
+        availability = await AvailabilityService.update_availability(data)
+        return availability
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
