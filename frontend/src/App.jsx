@@ -4,24 +4,31 @@ import { Footer } from "./components/Footer/Footer";
 import { LandingPage } from "./components/LandingPage/LandingPage"
 import { Header } from "./components/Header/Header";
 import { LogInForm } from "./components/LogInForm/LogInForm";
+import { SignUpForm } from "./components/SignUpForm/SignUpForm";
 
 export const App = () => {
-    const [showModal, setShowModal] = useState(false);
+    const [showLogInModal, setShowLogInModal] = useState(false);
+    const [showSignUpModal, setShowSignUpModal] = useState(false);
 
-    const handleOpenModal = () => {
-        setShowModal(true);
+    const handleOpenLogInModal = () => {
+        setShowLogInModal(true);
+    }
+
+    const handleOpenSignUpModal = () => {
+        setShowSignUpModal(true);
     }
 
     const handleCloseModal = () => {
-        setShowModal(false);
+        setShowLogInModal(false);
+        setShowSignUpModal(false);
     }
 
     return (
         <>
             <div className="wrapper">
-                <Header onOpenModal={handleOpenModal} />
+                <Header onOpenLogInModal={handleOpenLogInModal} onOpenSignUpModal={handleOpenSignUpModal} />
 
-                {showModal && (
+                {showLogInModal && (
                     <div className="modal">
                         <div className="modal__overlay" onClick={handleCloseModal}></div>
                         <div className="modal__content" onClick={(e) => e.stopPropagation()}>
@@ -29,6 +36,16 @@ export const App = () => {
                         </div>
                     </div>
                 )}
+
+                {showSignUpModal && (
+                    <div className="modal">
+                        <div className="modal__overlay" onClick={handleCloseModal}></div>
+                        <div className="modal__content" onClick={(e) => e.stopPropagation()}>
+                            <SignUpForm />
+                        </div>
+                    </div>
+                )}
+
                 <LandingPage />
                 <Footer />
             </div>
