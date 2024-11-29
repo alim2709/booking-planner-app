@@ -8,6 +8,7 @@ import { Header } from "./components/Header/Header";
 import NotFoundPage from "./pages/NotFoundPage";
 import { HomePage } from "./components/HomePage/HomePage";
 import { StudentsPage } from "./components/StudentPage/StudentPage";
+import { CoachPage } from "./components/CoachPage/CoachPage";
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                     <Route path="/" element={<LandingPage />} />
                     <Route path="/home" element={<HomePage />} />
                     <Route path="/studPage" element={<StudentsPage />} />
+                    <Route path="/coachPage" element={<CoachPage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
                 <Footer />
