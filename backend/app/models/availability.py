@@ -4,7 +4,7 @@ from app.database import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey, Date, Time
 
-from app.models.users import User
+from app.models.user import User
 
 
 class Availability(Base):
