@@ -8,9 +8,9 @@ from alembic import context
 from app.config import settings
 from app.database import Base
 
-from app.models.users import User  # noqa
-from app.models.availabilities import Availability  # noqa
-from app.models.appointments import Appointment  # noqa
+from app.models.user import User  # noqa
+from app.models.availability import Availability  # noqa
+from app.models.appointment import Appointment  # noqa
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

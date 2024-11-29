@@ -1,7 +1,7 @@
 import React from "react";
-import "./Footer.scss";
 import { Link } from "react-router-dom";
-import BeCodeLogo from "../../assets/icons/BeCode_logo_BeCode_color.jpg";
+import "./Footer.scss";
+import BeCodeLogo from "../../assets/icons/BeCode_color.png";
 import Twitter from "../../assets/icons/twitter-black-shape.png";
 import Facebook from "../../assets/icons/facebook.png";
 import LinkedIn from "../../assets/icons/linkedin.png";
@@ -12,11 +12,13 @@ export const Footer = () => {
         <footer className="footer">
             <div className="footer__left">
                 <div className="footer__info">
-                    <img
-                        className="footer__logo"
-                        src={BeCodeLogo}
-                        alt="BeCode logo"
-                    />
+                    <a href="/">
+                        <img
+                            className="footer__logo"
+                            src={BeCodeLogo}
+                            alt="BeCode logo"
+                        />
+                    </a>
                     <p className="footer__description">
                         At BeCode, we make tech trainings accessible to all. We
                         support, advise, train job seekers to become the tech
@@ -62,7 +64,7 @@ export const Footer = () => {
                             Home
                         </Link>
                     </div>
-                    <div className="footer__link-section">
+                    <div className="footer__link-section footer__link-section--extra-gap">
                         <a className="footer__link" href="/">
                             Profile
                         </a>
