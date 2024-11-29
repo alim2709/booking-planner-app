@@ -7,6 +7,7 @@ import { LandingPage } from "./components/LandingPage/LandingPage";
 import { Header } from "./components/Header/Header";
 import NotFoundPage from "./pages/NotFoundPage";
 import { HomePage } from "./components/HomePage/HomePage";
+import { StudentsPage } from "./components/StudentPage/StudentPage";
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<LandingPage />} />
                     <Route path="/home" element={<HomePage />} />
+                    <Route path="/studPage" element={<StudentsPage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
                 <Footer />
