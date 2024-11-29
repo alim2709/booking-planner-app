@@ -12,10 +12,10 @@ class Availability(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     coach_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
-    # date: Mapped[datetime.date] = mapped_column(Date, nullable=False)
-    # start_time: Mapped[datetime.time] = mapped_column(Time, nullable=False)
-    # end_time: Mapped[datetime.time] = mapped_column(Time, nullable=False)
+    date: Mapped[datetime.date] = mapped_column(Date, nullable=False)
+    start_time: Mapped[datetime.time] = mapped_column(Time, nullable=False)
+    end_time: Mapped[datetime.time] = mapped_column(Time, nullable=False)
     is_booked: Mapped[bool] = mapped_column(default=False, nullable=False)
-    # created_at: Mapped[datetime.date] = mapped_column(Date, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(default=datetime.now, nullable=False)
 
     coach: Mapped["User"] = relationship("User", back_populates="availabilities")
