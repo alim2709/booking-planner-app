@@ -3,6 +3,7 @@ from app.database import async_session_maker
 from sqlalchemy import select
 
 from app.models.availability import Availability
+from app.schemas.availability import CreateAvailabilityModel
 
 
 class AvailabilityDB:
@@ -17,3 +18,11 @@ class AvailabilityDB:
             response = request.scalars().all()
 
             return response
+        
+    async def create_availability(self, data: CreateAvailabilityModel):
+        async with self.session() as session: 
+            availability = Availability(**data)
+            session.add(availability)
+            await session.commit()
+
+            return availability 
