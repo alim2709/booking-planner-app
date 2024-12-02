@@ -3,7 +3,7 @@ import re
 
 import jwt
 from app.config import settings
-from datetime import timedelta, datetime
+from datetime import timedelta, datetime, timezone
 from passlib.context import CryptContext
 
 
@@ -21,9 +21,10 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 def create_access_token(
     user_data: dict, expire: timedelta = None, refresh: bool = False
 ) -> str:
+
     payload = {
         "user": user_data,
-        "exp": datetime.now()
+        "exp": datetime.now(timezone.utc)
         + (
             expire
             if expire
