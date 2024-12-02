@@ -12,6 +12,7 @@ import { HomePage } from "./components/HomePage/HomePage";
 import { StudentsPage } from "./components/StudentPage/StudentPage";
 import { CoachPage } from "./components/CoachPage/CoachPage";
 import { CoachSelectionPage } from "./components/CoachSelectionPage/CoachSelectionPage";
+import { CalendarApp } from "./components/CalendarApp/CalendarApp";
 
 export const App = () => {
     const [showLogInModal, setShowLogInModal] = useState(false);
@@ -46,6 +47,7 @@ export const App = () => {
                         path="/selectPage"
                         element={<CoachSelectionPage />}
                     />
+                    <Route path="/calendar" element={<CalendarApp />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
 
