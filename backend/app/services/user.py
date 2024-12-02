@@ -1,7 +1,16 @@
+from datetime import timedelta
+
+from app.config import settings
 from app.crud.user import UserDB
 from fastapi import HTTPException, status
+from fastapi.responses import JSONResponse
 
-from app.utils.authentication import get_password_hash, validate_password
+from app.utils.authentication import (
+    get_password_hash,
+    validate_password,
+    verify_password,
+    create_access_token,
+)
 
 crud_user = UserDB()
 
@@ -40,3 +49,48 @@ class UserService:
         )
 
         return new_user
+
+    @classmethod
+    async def login_user(cls, user_login_data):
+
+        email = user_login_data.email
+        password = user_login_data.password
+
+        user = await crud_user.get_user_by_email(email=email)
+        if user:
+            password_valid = verify_password(password, user.hashed_password)
+            if password_valid:
+                access_token = create_access_token(
+                    user_data={
+                        "email": user.email,
+                        "username": user.username,
+                        "role": user.role.value,
+                        "id": str(user.id),
+                    }
+                )
+
+                refresh_token = create_access_token(
+                    user_data={
+                        "email": user.email,
+                        "username": user.username,
+                        "role": user.role.value,
+                        "id": str(user.id),
+                    },
+                    refresh=True,
+                    expire=timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS),
+                )
+
+                return JSONResponse(
+                    content={
+                        "message": "You are now logged in",
+                        "access_token": access_token,
+                        "refresh_token": refresh_token,
+                    }
+                )
+        else:
+            return JSONResponse(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                content={
+                    "message": "Invalid email or password",
+                },
+            )
