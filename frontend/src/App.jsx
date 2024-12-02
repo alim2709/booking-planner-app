@@ -5,7 +5,7 @@ import "./App.scss";
 import { Footer } from "./components/Footer/Footer";
 import { LandingPage } from "./components/LandingPage/LandingPage";
 import { Header } from "./components/Header/Header";
-import NotFoundPage from "./pages/NotFoundPage";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import { LogInForm } from "./components/LogInForm/LogInForm";
 import { SignUpForm } from "./components/SignUpForm/SignUpForm";
 import { HomePage } from "./components/HomePage/HomePage";

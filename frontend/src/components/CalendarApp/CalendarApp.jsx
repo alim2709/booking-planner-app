@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import Modal from "react-modal";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import enUS from "date-fns/locale/en-US";
 import "./CalendarApp.scss";
+
+Modal.setAppElement("#root");
 
 const locales = {
     "en-US": enUS,
@@ -23,17 +26,22 @@ const events = [
         start: new Date(2024, 10, 26, 14, 0),
         end: new Date(2024, 10, 26, 15, 0),
         allDay: false,
+        description: "Discuss project milestones and next steps.",
+        location: "Room 101",
     },
     {
         title: "Presentation Preparation",
         start: new Date(2024, 10, 27, 11, 0),
         end: new Date(2024, 10, 27, 12, 0),
         allDay: false,
+        description: "Prepare slides for the upcoming presentation.",
+        location: "Online (Zoom)",
     },
 ];
 
 export const CalendarApp = () => {
     const [calendarEvents, setCalendarEvents] = useState(events);
+    const [selectedEvent, setSelectedEvent] = useState(null);
 
     const handleSelectSlot = (slotInfo) => {
         const title = window.prompt("Enter event title");
@@ -48,6 +56,14 @@ export const CalendarApp = () => {
                 },
             ]);
         }
+    };
+
+    const handleSelectEvent = (event) => {
+        setSelectedEvent(event);
+    };
+
+    const closeModal = () => {
+        setSelectedEvent(null);
     };
 
     return (
@@ -71,21 +87,44 @@ export const CalendarApp = () => {
                         style={{ height: 500 }}
                         selectable
                         onSelectSlot={handleSelectSlot}
-                        onSelectEvent={(event) =>
-                            alert(
-                                `Title: ${event.title}\n` +
-                                    `Description: ${event.description}\n` +
-                                    `Location: ${event.location}\n` +
-                                    `Start: ${event.start.toLocaleString()}\n` +
-                                    `End: ${event.end.toLocaleString()}`
-                            )
-                        }
+                        onSelectEvent={handleSelectEvent}
                         min={new Date(2024, 10, 26, 9, 30)}
                         max={new Date(2024, 10, 26, 16, 30)}
                     />
                 </div>
                 <button className="meeting-planner__button">Next</button>
             </div>
+
+            {selectedEvent && (
+                <Modal
+                    isOpen={true}
+                    onRequestClose={closeModal}
+                    contentLabel="Event Details"
+                    className="modal"
+                    overlayClassName="modal-overlay"
+                >
+                    <h2>{selectedEvent.title}</h2>
+                    <p>
+                        <strong>Description:</strong>{" "}
+                        {selectedEvent.description || "No description provided"}
+                    </p>
+                    <p>
+                        <strong>Location:</strong>{" "}
+                        {selectedEvent.location || "No location specified"}
+                    </p>
+                    <p>
+                        <strong>Start:</strong>{" "}
+                        {selectedEvent.start.toLocaleString()}
+                    </p>
+                    <p>
+                        <strong>End:</strong>{" "}
+                        {selectedEvent.end.toLocaleString()}
+                    </p>
+                    <button onClick={closeModal} className="modal-close-button">
+                        Close
+                    </button>
+                </Modal>
+            )}
         </section>
     );
 };
