@@ -19,3 +19,6 @@ class Availability(Base):
     created_at: Mapped[datetime] = mapped_column(default=datetime.now, nullable=False)
 
     coach: Mapped["User"] = relationship("User", back_populates="availabilities")
+    appointments: Mapped[list["Appointment"]] = relationship(
+        "Appointment", back_populates="availability"
+    )

@@ -14,16 +14,18 @@ class Appointment(Base):
     id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     student_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     coach_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
-    availability_id: Mapped[int] = mapped_column(
-        ForeignKey("availabilities.id"), nullable=False
-    )
+    availability_id: Mapped[int] = mapped_column(ForeignKey("availabilities.id"), nullable=False)
     status: Mapped[str] = mapped_column(
         Enum(StatusAppointment), default=StatusAppointment.PENDING, nullable=False
     )
     created_at: Mapped[datetime] = mapped_column(default=datetime.now, nullable=False)
 
-    student = relationship(
-        "User", foreign_keys=[student_id], back_populates="appointments"
+    student: Mapped["User"] = relationship(
+        "User", back_populates="student_appointments", foreign_keys=[student_id]
     )
-    coach = relationship("User", foreign_keys=[coach_id])
-    availability = relationship("Availability", back_populates="appointments")
+    coach: Mapped["User"] = relationship(
+        "User", back_populates="coach_appointments", foreign_keys=[coach_id]
+    )
+    availability: Mapped["Availability"] = relationship(
+        "Availability", back_populates="appointments"
+    )

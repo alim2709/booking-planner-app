@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from app.routers.availability import availability_router
+from app.routers.appointment import appointment_router
 
 app = FastAPI(
     title="Booking Planner API",
@@ -8,6 +9,7 @@ app = FastAPI(
 )
 
 app.include_router(availability_router)
+app.include_router(appointment_router)
 
 
 @app.get("/")

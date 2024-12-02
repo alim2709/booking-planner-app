@@ -23,3 +23,9 @@ class User(Base):
     availabilities: Mapped[list["Availability"]] = relationship(
         "Availability", back_populates="coach"
     )
+    student_appointments: Mapped[list["Appointment"]] = relationship(
+        "Appointment", back_populates="student", foreign_keys="[Appointment.student_id]"
+    )
+    coach_appointments: Mapped[list["Appointment"]] = relationship(
+        "Appointment", back_populates="coach", foreign_keys="[Appointment.coach_id]"
+    )
