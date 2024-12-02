@@ -11,6 +11,7 @@ import { SignUpForm } from "./components/SignUpForm/SignUpForm";
 import { HomePage } from "./components/HomePage/HomePage";
 import { StudentsPage } from "./components/StudentPage/StudentPage";
 import { CoachPage } from "./components/CoachPage/CoachPage";
+import { CoachSelectionPage } from "./components/CoachSelectionPage/CoachSelectionPage";
 
 export const App = () => {
     const [showLogInModal, setShowLogInModal] = useState(false);
@@ -41,6 +42,10 @@ export const App = () => {
                     <Route path="/home" element={<HomePage />} />
                     <Route path="/studPage" element={<StudentsPage />} />
                     <Route path="/coachPage" element={<CoachPage />} />
+                    <Route
+                        path="/selectPage"
+                        element={<CoachSelectionPage />}
+                    />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
 
