@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime, timezone
 
 from app.config import settings
 from app.crud.user import UserDB
@@ -59,6 +59,7 @@ class UserService:
         user = await crud_user.get_user_by_email(email=email)
         if user:
             password_valid = verify_password(password, user.hashed_password)
+
             if password_valid:
                 access_token = create_access_token(
                     user_data={
@@ -87,10 +88,41 @@ class UserService:
                         "refresh_token": refresh_token,
                     }
                 )
+            else:
+                return JSONResponse(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    content={
+                        "message": "Invalid password",
+                    },
+                )
         else:
             return JSONResponse(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 content={
-                    "message": "Invalid email or password",
+                    "message": "Invalid email",
                 },
             )
+
+    @classmethod
+    async def refresh_token(cls, token_details):
+        expiry_timestamp = token_details["exp"]
+        expiry_datetime = datetime.fromtimestamp(expiry_timestamp, tz=timezone.utc)
+
+        if expiry_datetime > datetime.now(timezone.utc):
+            new_access_token = create_access_token(user_data=token_details["user"])
+
+            refresh_token = create_access_token(
+                user_data=token_details["user"],
+                refresh=True,
+                expire=timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS),
+            )
+
+            return JSONResponse(
+                content={
+                    "access_token": new_access_token,
+                    "refresh_token": refresh_token,
+                }
+            )
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Token invalid or expired"
+        )
