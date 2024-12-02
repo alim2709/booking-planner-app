@@ -6,11 +6,16 @@ PASSWORD_MIN_LENGTH = 8
 
 
 class SUserCreateModel(BaseModel):
-    username: str = Field(max_length=20)
-    email: EmailStr = Field(max_length=50)
-    password: str = Field(min_length=8)
+    username: str = Field(max_length=USERNAME_MAX_LENGTH)
+    email: EmailStr = Field(max_length=EMAIL_MAX_LENGTH)
+    password: str = Field(min_length=PASSWORD_MIN_LENGTH)
 
 
 class SUserModel(BaseModel):
     username: str
     email: EmailStr
+
+
+class SUserLoginModel(BaseModel):
+    email: EmailStr = Field(max_length=EMAIL_MAX_LENGTH)
+    password: str = Field(min_length=PASSWORD_MIN_LENGTH)
