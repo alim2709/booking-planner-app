@@ -10,6 +10,11 @@ class AppointmentService:
         return result 
     
     @classmethod
+    async def get_appointment(cls, appointment_id: int):
+        result = await crud_appointment.get_appointment(appointment_id)
+        return result
+    
+    @classmethod
     async def create_appointment(cls, data: SAppointmentModel):
         if data.start_time >= data.end_time:
             raise ValueError("Start time must be earlier than end time.")

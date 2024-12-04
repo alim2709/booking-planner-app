@@ -16,6 +16,14 @@ async def get_availabilities():
     response = await availability_service.get_availabilities()
     return response
 
+@availability_router.get("/availabilities/{availability_id}", response_model=SAvailabilityModel)
+async def get_availability(availability_id: int):
+    try:
+        response = await availability_service.get_availability(availability_id)
+        return response
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
 @availability_router.post("/availabilities", response_model=SAvailabilityModel)
 async def create_availability(data: SAvailabilityModel):
     try:
@@ -24,10 +32,18 @@ async def create_availability(data: SAvailabilityModel):
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     
-@availability_router.patch("/availabilities", response_model=SAvailabilityModel)
-async def update_availability(data: SAvailabilityModel):
+@availability_router.patch("/availabilities/{availability_id}", response_model=SAvailabilityModel)
+async def update_availability(availability_id: int, data: SAvailabilityModel):
     try:
-        availability = await AvailabilityService.update_availability(data)
+        availability = await AvailabilityService.update_availability(availability_id, data)
+        return availability
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@availability_router.delete("/availabilities/{availability_id}", response_model=SAvailabilityModel)
+async def delete_availability(availability_id: int):
+    try:
+        availability = await AvailabilityService.delete_availability(availability_id)
         return availability
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
