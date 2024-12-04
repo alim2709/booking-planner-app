@@ -62,7 +62,7 @@ export const CalendarApp = () => {
         setSelectedEvent(event);
     };
 
-    const closeModal = () => {
+    const closeModalWindow = () => {
         setSelectedEvent(null);
     };
 
@@ -98,9 +98,9 @@ export const CalendarApp = () => {
             {selectedEvent && (
                 <Modal
                     isOpen={true}
-                    onRequestClose={closeModal}
+                    onRequestClose={closeModalWindow}
                     contentLabel="Event Details"
-                    className="modal"
+                    className="modal-window"
                     overlayClassName="modal-overlay"
                 >
                     <h2>{selectedEvent.title}</h2>
@@ -120,7 +120,10 @@ export const CalendarApp = () => {
                         <strong>End:</strong>{" "}
                         {selectedEvent.end.toLocaleString()}
                     </p>
-                    <button onClick={closeModal} className="modal-close-button">
+                    <button
+                        onClick={closeModalWindow}
+                        className="modal-close-button"
+                    >
                         Close
                     </button>
                 </Modal>

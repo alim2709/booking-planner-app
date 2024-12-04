@@ -19,16 +19,24 @@ export const Header = ({ onOpenLogInModal, onOpenSignUpModal }) => {
                     <span className="header__title">Planning</span>
                 </div>
                 <div className="header__actions">
-                    <a className="header__link header__link--login" href="#" onClick={(e) => {
-                        e.preventDefault();
-                        onOpenLogInModal();
-                    }}>
+                    <a
+                        className="header__link header__link--login"
+                        href="#"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onOpenLogInModal();
+                        }}
+                    >
                         Log In
                     </a>
-                    <a className="header__link header__link--signup" href="#"onClick={(e) => {
-                        e.preventDefault();
-                        onOpenSignUpModal();
-                    }}>
+                    <a
+                        className="header__link header__link--signup"
+                        href="#"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onOpenSignUpModal();
+                        }}
+                    >
                         Sign Up
                     </a>
                 </div>
