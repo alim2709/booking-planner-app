@@ -76,18 +76,18 @@ export const Footer = () => {
                         </a>
                     </div>
                     <div className="footer__link-section">
-                        <a className="footer__link" href="/">
+                        <a className="footer__link" href="https://moodle.becode.org">
                             Moodle
                         </a>
                     </div>
                     <div className="footer__link-section">
-                        <Link to="/" className="footer__link" href="/">
+                        <a className="footer__link" href="https://becode.org/">
                             BeCode
-                        </Link>
-                        <a className="footer__link" href="/">
+                        </a>
+                        <a className="footer__link" href="https://becode.org/campuses/">
                             Campuses
                         </a>
-                        <a className="footer__link" href="/">
+                        <a className="footer__link" href="https://becode.org/team/">
                             Team
                         </a>
                     </div>

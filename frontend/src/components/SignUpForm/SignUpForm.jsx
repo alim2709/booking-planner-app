@@ -14,7 +14,17 @@ export const SignUpForm = () => {
                 <span className="signup-form__title"> Planning</span>
             </div>
             <div className="signup-form__main">
-                <label className="signup-form__label" htmlFor="login"><strong>Login</strong></label>
+                <label className="signup-form__label" htmlFor="email"><strong>Email</strong></label>
+                <input
+                    className="signup-form__input"
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Your email"
+                    required
+                    title="Please enter your email"
+                />
+                <label className="signup-form__label" htmlFor="login"><strong>Username</strong></label>
                 <input
                     className="signup-form__input"
                     type="text"
