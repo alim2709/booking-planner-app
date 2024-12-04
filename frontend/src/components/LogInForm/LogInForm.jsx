@@ -14,8 +14,10 @@ export const LogInForm = () => {
             const response = await fetch("/fakeUsers.json");
             const users = await response.json();
 
+            console.log("Loaded users:", users); 
+
             const user = users.find(
-                (u) => u.login === login && u.password === password
+                (u) => u.username === login && u.password === password
             );
 
             if (user) {
