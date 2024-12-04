@@ -13,6 +13,7 @@ import { StudentsPage } from "./components/StudentPage/StudentPage";
 import { CoachPage } from "./components/CoachPage/CoachPage";
 import { CoachSelectionPage } from "./components/CoachSelectionPage/CoachSelectionPage";
 import { CalendarApp } from "./components/CalendarApp/CalendarApp";
+import { CalendarAcceptationPage } from "./components/CalendarAcceptation/CalendarAcceptationPage";
 
 export const App = () => {
     const [showLogInModal, setShowLogInModal] = useState(false);
@@ -48,6 +49,7 @@ export const App = () => {
                         element={<CoachSelectionPage />}
                     />
                     <Route path="/calendar" element={<CalendarApp />} />
+                    <Route path="/acceptationPage" element={<CalendarAcceptationPage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
 

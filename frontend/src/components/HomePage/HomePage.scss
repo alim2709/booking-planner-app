@@ -26,15 +26,11 @@
         z-index: 2;
 
         .dashboard__greeting {
-            font-weight: 500;
+            font-weight: 700;
             margin-bottom: 10px;
         }
         .dashboard__meetings {
-            font-weight: 500;
-
-            span {
-                color: #46c3c6;
-            }
+            font-weight: 700;
         }
     }
     .dashboard__actions {
