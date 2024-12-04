@@ -1,11 +1,24 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
+from app.config import settings
 from app.routers.availability import availability_router
 from app.routers.user import user_router
+
 
 app = FastAPI(
     title="Booking Planner API",
     summary="API for managing users, availabilities, appointments",
+)
+
+origins = settings.FASTAPI_CORS_ALLOWED_ORIGINS.split(",")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(user_router)
