@@ -19,20 +19,24 @@ async def get_appointment(appointment_id: int):
 @appointment_router.post("/appointments", response_model=SAppointmentModel)
 async def create_appointment(data: SAppointmentModel):
     try:
-        appointment = await AppointmentService.create_appointment(data)
-        return appointment
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    
-@appointment_router.patch("/appointments/{appointment_id}", response_model=SAppointmentModel)
-async def update_appointment(data: SAppointmentModel):
-    try:
-        appointment = await AppointmentService.update_appointment(data)
+        appointment = await appointment_service.create_appointment(data)
         return appointment
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@appointment_router.delete("/appointments/{appointment_id}", response_model=SAppointmentModel)
-async def delete_appointment(data: SAppointmentModel):
-    appointment = await AppointmentService.delete_appointment(data)
-    return appointment
+@appointment_router.patch("/appointments/{appointment_id}", response_model=SAppointmentModel)
+async def update_appointment(appointment_id: int, data: SAppointmentModel):
+    try:
+        appointment = await appointment_service.update_appointment(appointment_id, data)
+        return appointment
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@appointment_router.delete("/appointments/{appointment_id}")
+async def delete_appointment(appointment_id: int):
+    try:
+        response = await appointment_service.delete_appointment(appointment_id)
+        return response
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))

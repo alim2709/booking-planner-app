@@ -24,17 +24,13 @@ class AppointmentService:
         return SAppointmentModel.model_construct(new_appointment)
     
     @classmethod
-    async def update_appointment(cls, data: SAppointmentModel):
+    async def update_appointment(cls, appointment_id: int, data: SAppointmentModel):
         if data.start_time >= data.end_time:
             raise ValueError("Start time must be earlier than end time.")
-
-        updated_appointment = await crud_appointment.update_appointment(data)
-
+        updated_appointment = await crud_appointment.update_appointment(appointment_id, data.model_dump())
         return SAppointmentModel.model_construct(updated_appointment)
-    
-    
-    @classmethod 
-    async def delete_appointment(cls, data: SAppointmentModel):
-        deleted_appointment = await crud_appointment.delete_appointment(data)
 
+    @classmethod
+    async def delete_appointment(cls, appointment_id: int):
+        deleted_appointment = await crud_appointment.delete_appointment(appointment_id)
         return SAppointmentModel.model_construct(deleted_appointment)

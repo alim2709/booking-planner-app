@@ -27,7 +27,7 @@ class AvailabilityService:
     async def update_availability(cls, availability_id: int, data: SAvailabilityModel):
         if data.start_time >= data.end_time:
             raise ValueError("Start time must be earlier than end time.")
-        updated_availability = await crud_availability.update_availability(availability_id, data.dict())
+        updated_availability = await crud_availability.update_availability(availability_id, data.model_dump())
         return SAvailabilityModel.model_construct(updated_availability)
 
     @classmethod

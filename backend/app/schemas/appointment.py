@@ -1,14 +1,15 @@
-from datetime import date, time, datetime
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict
+from datetime import datetime
 from typing import ClassVar
 from app.utils.enums import StatusAppointment
-
 
 class SAppointmentModel(BaseModel):
     id: int
     student_id: int
     coach_id: int
     availability_id: int
+    start_time: datetime = Field(..., description="Start time of the appointment")
+    end_time: datetime = Field(..., description="End time of the appointment")
     status: StatusAppointment
     created_at: datetime
 
