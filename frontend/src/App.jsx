@@ -5,12 +5,14 @@ import "./App.scss";
 import { Footer } from "./components/Footer/Footer";
 import { LandingPage } from "./components/LandingPage/LandingPage";
 import { Header } from "./components/Header/Header";
-import NotFoundPage from "./pages/NotFoundPage";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import { LogInForm } from "./components/LogInForm/LogInForm";
 import { SignUpForm } from "./components/SignUpForm/SignUpForm";
 import { HomePage } from "./components/HomePage/HomePage";
 import { StudentsPage } from "./components/StudentPage/StudentPage";
 import { CoachPage } from "./components/CoachPage/CoachPage";
+import { CoachSelectionPage } from "./components/CoachSelectionPage/CoachSelectionPage";
+import { CalendarApp } from "./components/CalendarApp/CalendarApp";
 import { CalendarAcceptationPage } from "./components/CalendarAcceptation/CalendarAcceptationPage";
 
 export const App = () => {
@@ -42,6 +44,11 @@ export const App = () => {
                     <Route path="/home" element={<HomePage />} />
                     <Route path="/studPage" element={<StudentsPage />} />
                     <Route path="/coachPage" element={<CoachPage />} />
+                    <Route
+                        path="/selectPage"
+                        element={<CoachSelectionPage />}
+                    />
+                    <Route path="/calendar" element={<CalendarApp />} />
                     <Route path="/acceptationPage" element={<CalendarAcceptationPage />} />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
