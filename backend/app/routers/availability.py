@@ -40,10 +40,10 @@ async def update_availability(availability_id: int, data: SAvailabilityModel):
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-@availability_router.delete("/availabilities/{availability_id}", response_model=SAvailabilityModel)
+@availability_router.delete("/availabilities/{availability_id}")
 async def delete_availability(availability_id: int):
     try:
-        availability = await AvailabilityService.delete_availability(availability_id)
-        return availability
+        response = await availability_service.delete_availability(availability_id)
+        return response
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))

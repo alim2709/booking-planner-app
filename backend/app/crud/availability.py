@@ -63,8 +63,8 @@ class AvailabilityDB:
             availability = request.scalars().first()
 
             if not availability:
-                raise ValueError(f"Availability with id {availability_id} not found.")
+                raise ValueError(f"Appointment with id {availability_id} not found.")
 
-            session.delete(availability)
+            await session.delete(availability)
             await session.commit()
-            return availability
+            return {"message": f"Appointment with id {availability_id} has been deleted."}
