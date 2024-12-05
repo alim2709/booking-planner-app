@@ -2,18 +2,18 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { useState } from "react";
 import "./App.scss";
 
-import { Footer } from "./components/Footer/Footer";
-import { LandingPage } from "./components/LandingPage/LandingPage";
-import { Header } from "./components/Header/Header";
+import { Footer } from "./components/Footer";
+import { LandingPage } from "./components/LandingPage";
+import { Header } from "./components/Header";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
-import { LogInForm } from "./components/LogInForm/LogInForm";
-import { SignUpForm } from "./components/SignUpForm/SignUpForm";
-import { HomePage } from "./components/HomePage/HomePage";
-import { StudentsPage } from "./components/StudentPage/StudentPage";
-import { CoachPage } from "./components/CoachPage/CoachPage";
-import { CoachSelectionPage } from "./components/CoachSelectionPage/CoachSelectionPage";
-import { CalendarApp } from "./components/CalendarApp/CalendarApp";
-import { CalendarAcceptationPage } from "./components/CalendarAcceptation/CalendarAcceptationPage";
+import { LogInForm } from "./components/LogInForm";
+import { SignUpForm } from "./components/SignUpForm";
+import { HomePage } from "./components/HomePage";
+import { StudentsPage } from "./components/StudentPage";
+import { CoachPage } from "./components/CoachPage";
+import { CoachSelectionPage } from "./components/CoachSelectionPage";
+import { CalendarApp } from "./components/CalendarApp";
+import { CalendarAcceptationPage } from "./components/CalendarAcceptationPage";
 
 export const App = () => {
     const [showLogInModal, setShowLogInModal] = useState(false);
@@ -42,14 +42,17 @@ export const App = () => {
                 <Routes>
                     <Route path="/" element={<LandingPage />} />
                     <Route path="/home" element={<HomePage />} />
-                    <Route path="/studPage" element={<StudentsPage />} />
+                    <Route path="/studentPage" element={<StudentsPage />} />
                     <Route path="/coachPage" element={<CoachPage />} />
                     <Route
                         path="/selectPage"
                         element={<CoachSelectionPage />}
                     />
                     <Route path="/calendar" element={<CalendarApp />} />
-                    <Route path="/acceptationPage" element={<CalendarAcceptationPage />} />
+                    <Route
+                        path="/acceptationPage"
+                        element={<CalendarAcceptationPage />}
+                    />
                     <Route path="*" element={<NotFoundPage />} />
                 </Routes>
 

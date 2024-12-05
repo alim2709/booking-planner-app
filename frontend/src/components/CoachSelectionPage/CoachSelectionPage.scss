@@ -2,17 +2,15 @@
     margin-left: 5%;
     margin-right: 5%;
     max-width: 90%;
+    padding-top: 30px;
     color: #000000;
-    padding: 10px;
 
     &__header {
-        padding-bottom: 25px;
-        font-size: 25px;
+        margin-bottom: 40px;
+        font-size: 26.5px;
 
         &__title {
             color: #ffffff;
-            font-size: 28px;
-            font-weight: bold;
         }
     }
 
@@ -20,6 +18,7 @@
         background-color: #46c3c6;
         padding: 15px 20px 15px 20px;
         text-align: right;
+        margin-bottom: 30px;
 
         .choose-coach__step {
             font-size: 28px;

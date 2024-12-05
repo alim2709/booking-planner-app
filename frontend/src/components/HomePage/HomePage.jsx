@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "./HomePage.scss";
 
@@ -13,18 +14,12 @@ export const HomePage = () => {
                 </h2>
             </div>
             <div class="dashboard__actions">
-                <a
-                    href="#"
-                    class="dashboard__button dashboard__button--primary"
-                >
+                <Link to="/studentPage" className="dashboard__button dashboard__button--primary" href="/">
                     Go to meetings
-                </a>
-                <a
-                    href="#"
-                    class="dashboard__button dashboard__button--secondary"
-                >
+                </Link>
+                <Link to="/selectPage" className="dashboard__button dashboard__button--secondary" href="/">
                     Plan a meeting
-                </a>
+                </Link>
             </div>
         </section>
     );

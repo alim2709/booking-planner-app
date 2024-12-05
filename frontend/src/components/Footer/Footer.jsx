@@ -68,12 +68,12 @@ export const Footer = () => {
                         <a className="footer__link" href="/">
                             Profile
                         </a>
-                        <a className="footer__link" href="/">
+                        <Link to="/studentPage" className="footer__link" href="/">
                             Meetings
-                        </a>
-                        <a className="footer__link" href="/">
+                        </Link>
+                        <Link to="/selectPage" className="footer__link" href="/">
                             Calendar
-                        </a>
+                        </Link>
                     </div>
                     <div className="footer__link-section">
                         <a className="footer__link" href="https://moodle.becode.org">
