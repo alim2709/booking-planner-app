@@ -10,7 +10,7 @@ export const StudentsPage = () => {
                 <div className="meeting">
                     <div className="meeting__info">
                         <h3 className="meeting__name">Basile</h3>
-                        <p className="meeting__date">Monday, 9 December</p>
+                        <p className="meeting__date">Monday, 16 December</p>
                         <p className="meeting__time">10:00</p>
                     </div>
                     <div className="meeting__actions">
@@ -30,8 +30,8 @@ export const StudentsPage = () => {
                 </div>
                 <div className="meeting">
                     <div className="meeting__info">
-                        <h3 className="meeting__name">Ervin</h3>
-                        <p className="meeting__date">Monday, 10 December</p>
+                        <h3 className="meeting__name">Erwin</h3>
+                        <p className="meeting__date">Monday, 16 December</p>
                         <p className="meeting__time">11:00</p>
                     </div>
                     <div className="meeting__actions">
