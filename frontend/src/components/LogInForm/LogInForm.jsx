@@ -3,7 +3,7 @@ import BeCodeLogo from "../../assets/icons/BeCode_color.png";
 import "./LogInForm.scss";
 
 export const LogInForm = () => {
-    const [login, setLogin] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
 
@@ -42,15 +42,15 @@ export const LogInForm = () => {
                 <span className="login-form__title"> Planning</span>
             </div>
             <div className="login-form__main">
-                <label className="login-form__label" htmlFor="login"><strong>Username</strong></label>
+                <label className="login-form__label" htmlFor="email"><strong>Username</strong></label>
                 <input
                     className="login-form__input"
-                    type="text"
-                    name="login"
-                    id="login"
-                    placeholder="Your login"
-                    value={login}
-                    onChange={(e) => setLogin(e.target.value)}
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
                 <label className="login-form__label" htmlFor="password"><strong>Password</strong></label>
                 <input
