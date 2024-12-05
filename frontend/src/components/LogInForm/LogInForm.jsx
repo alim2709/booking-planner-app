@@ -42,7 +42,7 @@ export const LogInForm = () => {
                 <span className="login-form__title"> Planning</span>
             </div>
             <div className="login-form__main">
-                <label className="login-form__label" htmlFor="email"><strong>Username</strong></label>
+                <label className="login-form__label" htmlFor="email"><strong>Email</strong></label>
                 <input
                     className="login-form__input"
                     type="email"
