@@ -17,7 +17,9 @@ class User(Base):
     hashed_password: Mapped[str] = mapped_column(unique=True, nullable=False)
     is_active: Mapped[bool] = mapped_column(nullable=False, default=True)
     is_superuser: Mapped[bool] = mapped_column(nullable=False, default=False)
-    role: Mapped[str] = mapped_column(Enum(UserRole), nullable=False)
+    role: Mapped[str] = mapped_column(
+        Enum(UserRole), nullable=False, default=UserRole.USER
+    )
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
 
     availabilities: Mapped[list["Availability"]] = relationship(
