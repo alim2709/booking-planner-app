@@ -1,15 +1,16 @@
-from datetime import date, time, datetime
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict
+from datetime import datetime
 from typing import ClassVar
+from app.utils.enums import StatusAppointment
 
-
-class SAvailabilityModel(BaseModel):
+class SAppointmentModel(BaseModel):
     id: int
+    student_id: int
     coach_id: int
-    date: date
-    start_time: time
-    end_time: time
-    is_booked: bool
+    availability_id: int
+    start_time: datetime = Field(..., description="Start time of the appointment")
+    end_time: datetime = Field(..., description="End time of the appointment")
+    status: StatusAppointment
     created_at: datetime
 
     model_config: ClassVar[ConfigDict] = ConfigDict(arbitrary_types_allowed=True)
