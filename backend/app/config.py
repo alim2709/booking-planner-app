@@ -15,7 +15,7 @@ class Settings(BaseSettings):
 
     POSTGRES_DB: str
     POSTGRES_USER: str
-    POSTGRES_PASSWORD: int
+    POSTGRES_PASSWORD: str
 
     FASTAPI_CORS_ALLOWED_ORIGINS: str
 
