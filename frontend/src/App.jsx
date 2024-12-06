@@ -21,6 +21,13 @@ export const App = () => {
     const [showLogInModal, setShowLogInModal] = useState(false);
     const [showSignUpModal, setShowSignUpModal] = useState(false);
 
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    const handleSignUpSuccess = () => {
+        setIsAuthenticated(true); // Устанавливаем авторизацию после успешной регистрации
+        setShowSignUpModal(false); // Закрываем модалку регистрации
+    };
+
     const handleOpenLogInModal = () => {
         setShowLogInModal(true);
     };
@@ -38,6 +45,8 @@ export const App = () => {
         <Router>
             <div className="wrapper">
                 <Header
+                    isAuthenticated={isAuthenticated}
+                    onLogout={() => setIsAuthenticated(false)}
                     onOpenLogInModal={handleOpenLogInModal}
                     onOpenSignUpModal={handleOpenSignUpModal}
                 />
@@ -85,7 +94,10 @@ export const App = () => {
                             className="modal__content"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <SignUpForm />
+                            <SignUpForm
+                                onCloseModal={handleCloseModal}
+                                onSuccess={handleSignUpSuccess}
+                            />
                         </div>
                     </div>
                 )}

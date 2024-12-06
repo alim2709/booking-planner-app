@@ -1,13 +1,17 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import BeCodeLogo from "../../assets/icons/BeCode_color.png";
 import "./SignUpForm.scss";
 
-export const SignUpForm = () => {
+export const SignUpForm = ({ onCloseModal, onSuccess }) => {
     const [email, setEmail] = useState("");
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [message, setMessage] = useState("");
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,22 +22,49 @@ export const SignUpForm = () => {
         }
 
         try {
-            const response = await fetch("/fakeUsers.json");
-            const users = await response.json();
+            const response = await axios.post(
+                "http://localhost:7777/api/signUp",
+                {
+                    username: login.trim(),
+                    email: email.trim(),
+                    password: password,
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
 
-            const userExists = users.some((u) => u.username === login);
+            setMessage(
+                `Sign up successful! Welcome, ${
+                    response.data.username || login
+                }!`
+            );
+            if (onSuccess) {
+                onSuccess();
+            }
+            console.log("Response:", response.data);
 
-            if (userExists) {
-                setMessage("This username is already taken.");
-            } else {
-                setMessage("New account created succesfully.");
+            if (onCloseModal) {
+                onCloseModal();
             }
 
-        } catch (error) {
-            console.error("Error processing registration:", error);
-            setMessage("Something went wrong. Please try again later.");
+            navigate("/home");
+        } catch (err) {
+            if (err.response) {
+                console.error("Error:", err.response.data);
+                setMessage(
+                    `Sign up error: ${
+                        err.response.data.message || "Unknown error"
+                    }`
+                );
+            } else {
+                console.error("Request failed:", err);
+                setMessage("An error occurred during the sign-up process.");
+            }
         }
-    }
+    };
 
     return (
         <form className="signup-form" onSubmit={handleSubmit}>
@@ -46,7 +77,9 @@ export const SignUpForm = () => {
                 <span className="signup-form__title"> Planning</span>
             </div>
             <div className="signup-form__main">
-                <label className="signup-form__label" htmlFor="email"><strong>Email</strong></label>
+                <label className="signup-form__label" htmlFor="email">
+                    <strong>Email</strong>
+                </label>
                 <input
                     className="signup-form__input"
                     type="email"
@@ -58,7 +91,9 @@ export const SignUpForm = () => {
                     required
                     title="Please enter your email"
                 />
-                <label className="signup-form__label" htmlFor="login"><strong>Username</strong></label>
+                <label className="signup-form__label" htmlFor="login">
+                    <strong>Username</strong>
+                </label>
                 <input
                     className="signup-form__input"
                     type="text"
@@ -70,7 +105,9 @@ export const SignUpForm = () => {
                     required
                     title="Please enter your login"
                 />
-                <label className="signup-form__label" htmlFor="password"><strong>Password</strong></label>
+                <label className="signup-form__label" htmlFor="password">
+                    <strong>Password</strong>
+                </label>
                 <input
                     className="signup-form__input"
                     type="password"
@@ -82,7 +119,9 @@ export const SignUpForm = () => {
                     required
                     title="Please enter your password"
                 />
-                <label className="signup-form__label" htmlFor="password"><strong>Confirm password</strong></label>
+                <label className="signup-form__label" htmlFor="password">
+                    <strong>Confirm password</strong>
+                </label>
                 <input
                     className="signup-form__input"
                     type="password"
