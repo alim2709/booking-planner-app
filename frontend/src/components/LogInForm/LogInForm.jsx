@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import BeCodeLogo from "../../assets/icons/BeCode_color.png";
 import "./LogInForm.scss";
 
@@ -11,25 +12,36 @@ export const LogInForm = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch("/fakeUsers.json");
-            const users = await response.json();
-
-            console.log("Loaded users:", users); 
-
-            const user = users.find(
-                (u) => u.username === login && u.password === password
+            const response = await axios.post(
+                "http://localhost:7777/api/login",
+                {
+                    email: email.trim(),
+                    password: password.trim(),
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                }
             );
+            console.log("Login successful:", response.data);
 
-            if (user) {
-                setMessage("You're logged in!");
-            } else {
-                setMessage("Invalid username or password.");
-            }
+            setMessage(`Login successful! Welcome, ${email}!`);
+
         } catch (error) {
-            console.error("Error fetching user data:", error);
-            setMessage("Something went wrong. Please try again later.");
+            if (error.response) {
+                console.error("Login failed:", error.response.data);
+                setMessage(
+                    `Login failed: ${
+                        error.response.data.message || "Invalid credentials"
+                    }`
+                );
+            } else {
+                console.error("Request error:", error);
+                setMessage("An error occurred during login. Please try again.");
+            }
         }
-    }
+    };
 
     return (
         <form className="login-form" onSubmit={handleSubmit}>
@@ -64,7 +76,16 @@ export const LogInForm = () => {
                 />
                 <button className="login-form__button">Submit</button>
             </div>
-            {message && <p className="login-form__message">{message}</p>}
+            {message && (
+                <p 
+                    className="login-form__message"
+                    style={{
+                        color: message.includes("failed") ? "red" : "green",
+                    }}
+                >
+                    {message}
+                </p>
+            )}
         </form>
     );
 };

@@ -12,7 +12,7 @@ export const TestLogin = () => {
                 "http://localhost:7777/api/login",
                 {
                     email: email.trim(),
-                    password: password,
+                    password: password.trim(),
                 },
                 {
                     headers: {
@@ -31,7 +31,7 @@ export const TestLogin = () => {
                 setMessage(
                     `Login failed: ${
                         err.response.data.message || "Invalid credentials"
-                    }`
+                    }. Server details: ${JSON.stringify(err.response.data)}`
                 );
             } else {
                 console.error("Request failed:", err);
