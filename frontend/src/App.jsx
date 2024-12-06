@@ -79,7 +79,10 @@ export const App = () => {
                             className="modal__content"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <LogInForm />
+                            <LogInForm 
+                                onCloseModal={handleCloseModal}
+                                onSuccess={() => setIsAuthenticated(true)}
+                            />
                         </div>
                     </div>
                 )}

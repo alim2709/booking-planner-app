@@ -14,7 +14,7 @@ export const Header = ({
     const [isDropdownOpen, setIsDropdownOpen] = useState(false); // list
 
     const handleLogout = () => {
-        setIsAuthenticated(false);
+        onLogout();
         setIsDropdownOpen(false);
     };
 
