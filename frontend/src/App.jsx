@@ -14,6 +14,8 @@ import { CoachPage } from "./components/CoachPage";
 import { CoachSelectionPage } from "./components/CoachSelectionPage";
 import { CalendarApp } from "./components/CalendarApp";
 import { CalendarAcceptationPage } from "./components/CalendarAcceptationPage";
+import { TestApi } from "./services/TestApi";
+import { TestLogin } from "./services/TestLogin";
 
 export const App = () => {
     const [showLogInModal, setShowLogInModal] = useState(false);
@@ -54,6 +56,8 @@ export const App = () => {
                         element={<CalendarAcceptationPage />}
                     />
                     <Route path="*" element={<NotFoundPage />} />
+                    <Route path="/test-api" element={<TestApi />} />
+                    <Route path="/test-login" element={<TestLogin />} />
                 </Routes>
 
                 {showLogInModal && (
