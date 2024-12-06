@@ -1,0 +1,160 @@
+.choose-coach {
+    margin-left: 5%;
+    margin-right: 5%;
+    max-width: 90%;
+    padding-top: 30px;
+    color: #000000;
+
+    &__header {
+        margin-bottom: 40px;
+        font-size: 26.5px;
+
+        &__title {
+            color: #ffffff;
+        }
+    }
+
+    &__content {
+        background-color: #46c3c6;
+        padding: 15px 20px 15px 20px;
+        text-align: right;
+        margin-bottom: 30px;
+
+        .choose-coach__step {
+            font-size: 28px;
+            text-align: left;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .choose-coach__options {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+
+            .coach {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 30px;
+
+                &__circle {
+                    width: 80px;
+                    height: 80px;
+                    background-color: #ffffff;
+                    border: 2px solid #46c3c6;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 24px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                }
+
+                .coach__name {
+                    font-size: 20px;
+                    font-weight: 700;
+                    color: #333333;
+                }
+            }
+        }
+
+        .choose-coach__next-button {
+            background-color: white;
+            border: 1px solid black;
+            color: black;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 5px 35px 5px 35px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: #2fd0d4;
+            }
+        }
+
+        .choose-coach__selected-message {
+            margin-top: 20px;
+            color: black;
+            font-size: 18px;
+        }
+    }
+}
+
+.coach {
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &--selected {
+        background-color: rgba(25, 71, 71, 0.2);
+
+        .coach__circle {
+            background-color: #46c3c6;
+        }
+
+        .coach__name {
+            font-weight: bold;
+            color: white;
+        }
+    }
+}
+
+/* --- Медиа-запросы --- */
+@media (max-width: 768px) {
+    .choose-coach {
+        &__content {
+            .choose-coach__options {
+                flex-direction: column;
+                align-items: center;
+
+                .coach {
+                    padding: 15px;
+
+                    &__circle {
+                        font-size: 20px;
+                    }
+
+                    .coach__name {
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .choose-coach {
+        &__content {
+            padding: 10px;
+
+            .choose-coach__options {
+                .coach {
+                    padding: 10px;
+
+                    &__circle {
+                        width: 50px;
+                        height: 50px;
+                        font-size: 18px;
+                    }
+
+                    .coach__name {
+                        font-size: 14px;
+                    }
+                }
+            }
+
+            .choose-coach__step {
+                font-size: 20px;
+            }
+
+            .choose-coach__next-button {
+                font-size: 16px;
+                padding: 5px 20px;
+            }
+        }
+    }
+}
