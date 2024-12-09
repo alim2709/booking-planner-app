@@ -26,3 +26,9 @@ services:
       - "7777:8000"
     volumes:
       - ./:/code
+
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"

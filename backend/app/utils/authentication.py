@@ -1,5 +1,6 @@
 import logging
 import re
+import uuid
 
 import jwt
 from app.config import settings
@@ -24,6 +25,7 @@ def create_access_token(
 
     payload = {
         "user": user_data,
+        "jti": str(uuid.uuid4()),
         "exp": datetime.now(timezone.utc)
         + (
             expire

@@ -17,6 +17,9 @@ class Settings(BaseSettings):
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
 
+    REDIS_HOST: str
+    REDIS_PORT: int
+
     FASTAPI_CORS_ALLOWED_ORIGINS: str
 
     @property
