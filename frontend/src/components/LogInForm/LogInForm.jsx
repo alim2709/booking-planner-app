@@ -33,8 +33,8 @@ export const LogInForm = ({ onCloseModal, onSuccess }) => {
 
             if (onSuccess) {
                 onSuccess();
-            }            
-
+            }
+// everything is working?
             if (onCloseModal) {
                 onCloseModal();
             }
