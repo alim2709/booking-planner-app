@@ -1,35 +1,60 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import BeCodeLogo from "../../assets/icons/BeCode_color.png";
 import "./LogInForm.scss";
 
-export const LogInForm = () => {
+export const LogInForm = ({ onCloseModal, onSuccess }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await fetch("/fakeUsers.json");
-            const users = await response.json();
-
-            console.log("Loaded users:", users); 
-
-            const user = users.find(
-                (u) => u.username === login && u.password === password
+            const response = await axios.post(
+                "http://localhost:7777/api/login",
+                {
+                    email: email.trim(),
+                    password: password.trim(),
+                },
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    }
+                }
             );
+            console.log("Login successful:", response.data);
 
-            if (user) {
-                setMessage("You're logged in!");
-            } else {
-                setMessage("Invalid username or password.");
+            setMessage(`Login successful! Welcome, ${email}!`);
+
+            if (onSuccess) {
+                onSuccess();
             }
+// everything is working?
+            if (onCloseModal) {
+                onCloseModal();
+            }
+
+            navigate("/home");
+
         } catch (error) {
-            console.error("Error fetching user data:", error);
-            setMessage("Something went wrong. Please try again later.");
+            if (error.response) {
+                console.error("Login failed:", error.response.data);
+                setMessage(
+                    `Login failed: ${
+                        error.response.data.message || "Invalid credentials"
+                    }`
+                );
+            } else {
+                console.error("Request error:", error);
+                setMessage("An error occurred during login. Please try again.");
+            }
         }
-    }
+    };
 
     return (
         <form className="login-form" onSubmit={handleSubmit}>
@@ -42,7 +67,7 @@ export const LogInForm = () => {
                 <span className="login-form__title"> Planning</span>
             </div>
             <div className="login-form__main">
-                <label className="login-form__label" htmlFor="email"><strong>Username</strong></label>
+                <label className="login-form__label" htmlFor="email"><strong>Email</strong></label>
                 <input
                     className="login-form__input"
                     type="email"
@@ -64,7 +89,16 @@ export const LogInForm = () => {
                 />
                 <button className="login-form__button">Submit</button>
             </div>
-            {message && <p className="login-form__message">{message}</p>}
+            {message && (
+                <p 
+                    className="login-form__message"
+                    style={{
+                        color: message.includes("failed") ? "red" : "green",
+                    }}
+                >
+                    {message}
+                </p>
+            )}
         </form>
     );
 };

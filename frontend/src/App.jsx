@@ -14,10 +14,19 @@ import { CoachPage } from "./components/CoachPage";
 import { CoachSelectionPage } from "./components/CoachSelectionPage";
 import { CalendarApp } from "./components/CalendarApp";
 import { CalendarAcceptationPage } from "./components/CalendarAcceptationPage";
+import { TestApi } from "./services/TestApi";
+import { TestLogin } from "./services/TestLogin";
 
 export const App = () => {
     const [showLogInModal, setShowLogInModal] = useState(false);
     const [showSignUpModal, setShowSignUpModal] = useState(false);
+
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    const handleSignUpSuccess = () => {
+        setIsAuthenticated(true); // Устанавливаем авторизацию после успешной регистрации
+        setShowSignUpModal(false); // Закрываем модалку регистрации
+    };
 
     const handleOpenLogInModal = () => {
         setShowLogInModal(true);
@@ -36,6 +45,8 @@ export const App = () => {
         <Router>
             <div className="wrapper">
                 <Header
+                    isAuthenticated={isAuthenticated}
+                    onLogout={() => setIsAuthenticated(false)}
                     onOpenLogInModal={handleOpenLogInModal}
                     onOpenSignUpModal={handleOpenSignUpModal}
                 />
@@ -54,6 +65,8 @@ export const App = () => {
                         element={<CalendarAcceptationPage />}
                     />
                     <Route path="*" element={<NotFoundPage />} />
+                    <Route path="/test-api" element={<TestApi />} />
+                    <Route path="/test-login" element={<TestLogin />} />
                 </Routes>
 
                 {showLogInModal && (
@@ -66,7 +79,10 @@ export const App = () => {
                             className="modal__content"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <LogInForm />
+                            <LogInForm 
+                                onCloseModal={handleCloseModal}
+                                onSuccess={() => setIsAuthenticated(true)}
+                            />
                         </div>
                     </div>
                 )}
@@ -81,7 +97,10 @@ export const App = () => {
                             className="modal__content"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <SignUpForm />
+                            <SignUpForm
+                                onCloseModal={handleCloseModal}
+                                onSuccess={handleSignUpSuccess}
+                            />
                         </div>
                     </div>
                 )}

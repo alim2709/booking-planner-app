@@ -4,12 +4,17 @@ import user_logo from "../../assets/icons/circle.png";
 
 import "./Header.scss";
 
-export const Header = ({ onOpenLogInModal, onOpenSignUpModal }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false); // authorization
+export const Header = ({
+    onOpenLogInModal,
+    onOpenSignUpModal,
+    isAuthenticated,
+    onLogout,
+}) => {
+    // const [isAuthenticated, setIsAuthenticated] = useState(false); // authorization
     const [isDropdownOpen, setIsDropdownOpen] = useState(false); // list
 
     const handleLogout = () => {
-        setIsAuthenticated(false);
+        onLogout();
         setIsDropdownOpen(false);
     };
 
@@ -91,4 +96,5 @@ export const Header = ({ onOpenLogInModal, onOpenSignUpModal }) => {
             </header>
         </div>
     );
+// everything is working?
 };
