@@ -1,45 +1,49 @@
 import axios from "axios";
 
-const apiClient = axios.create({
-    baseURL: "http://localhost:7777/api",
+const axiosInstance = axios.create({
+    baseURL: "http://localhost:7777/api/", // Адрес вашего API
 });
 
-apiClient.interceptors.request.use(
+// Интерсептор для добавления токена в запросы
+axiosInstance.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem("accessToken");
         if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
+            config.headers["Authorization"] = `Bearer ${token}`;
         }
         return config;
     },
     (error) => Promise.reject(error)
 );
 
-apiClient.interceptors.response.use(
+// Интерсептор для обновления токенов
+axiosInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
-        if (error.response?.status === 401) {
-            const refreshToken = localStorage.getItem("refreshToken");
-            if (refreshToken) {
-                try {
-                    const res = await axios.post(
-                        "http://localhost:7777/api/token/refresh",
-                        { refreshToken }
-                    );
-                    const newAccessToken = res.data.accessToken;
-                    localStorage.setItem("accessToken", newAccessToken);
+        const originalRequest = error.config;
 
-                    error.config.headers.Authorization = `Bearer ${newAccessToken}`;
-                    return apiClient(error.config);
-                } catch (refreshError) {
-                    console.error("Token refresh failed:", refreshError);
-                    localStorage.clear();
-                    window.location.href = "/login";
-                }
+        if (error.response?.status === 401 && !originalRequest._retry) {
+            originalRequest._retry = true;
+            try {
+                const { data } = await axios.post("/refresh-token", {
+                    refreshToken: localStorage.getItem("refresh_token"),
+                });
+
+                localStorage.setItem("access_token", data.access_token);
+                axiosInstance.defaults.headers[
+                    "Authorization"
+                ] = `Bearer ${data.access_token}`;
+
+                return axiosInstance(originalRequest);
+            } catch (refreshError) {
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("refresh_token");
+                window.location.href = "/login";
+                return Promise.reject(refreshError);
             }
         }
         return Promise.reject(error);
     }
 );
 
-export default apiClient;
+export default axiosInstance;

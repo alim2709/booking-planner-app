@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axios from "../../services/apiClient";
 import BeCodeLogo from "../../assets/icons/BeCode_color.png";
 import "./LogInForm.scss";
 
@@ -30,9 +31,8 @@ export const LogInForm = ({ onCloseModal, onSuccess }) => {
             console.log("Login successful:", response.data);
 
             // Save tokens to localStorage
-            localStorage.setItem("accessToken", response.data.access_token);  // Обратите внимание на правильное имя ключа
-            localStorage.setItem("refreshToken", response.data.refresh_token);  // Обратите внимание на правильное имя ключа
-            
+            localStorage.setItem("accessToken", response.data.access_token); // Обратите внимание на правильное имя ключа
+            localStorage.setItem("refreshToken", response.data.refresh_token); // Обратите внимание на правильное имя ключа
 
             setMessage(`Login successful! Welcome, ${email}!`);
 
@@ -109,4 +109,3 @@ export const LogInForm = ({ onCloseModal, onSuccess }) => {
         </form>
     );
 };
-
