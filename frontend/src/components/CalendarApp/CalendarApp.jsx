@@ -37,7 +37,7 @@ const events = [
         description: "Prepare slides for the upcoming presentation.",
         location: "Online (Zoom)",
     },
-];
+]; // test data
 
 export const CalendarApp = () => {
     const [calendarEvents, setCalendarEvents] = useState(events);
