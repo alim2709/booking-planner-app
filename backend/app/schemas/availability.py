@@ -1,10 +1,9 @@
 from datetime import date, time, datetime
-from pydantic import BaseModel, ConfigDict
-from typing import ClassVar
-
+from pydantic import BaseModel, ConfigDict, field_validator
+from typing import ClassVar, Optional
 
 class SAvailabilityModel(BaseModel):
-    id: int | None
+    id: Optional[int] = None
     coach_id: int
     date: date
     start_time: time
@@ -12,14 +11,12 @@ class SAvailabilityModel(BaseModel):
     is_booked: bool
     created_at: datetime
 
+    
     model_config: ClassVar[ConfigDict] = ConfigDict(arbitrary_types_allowed=True)
 
-    @classmethod
-    def __get_validators__(cls):
-        yield cls.remove_timezone
-
-    @staticmethod
-    def remove_timezone(dt: datetime) -> datetime:
-        if dt.tzinfo is not None:
-            return dt.replace(tzinfo=None)
-        return dt
+    @field_validator('start_time', 'end_time', 'created_at')
+    def remove_timezone(cls, value: datetime) -> datetime:
+        """Remove timezone information from a datetime object."""
+        if value.tzinfo is not None:
+            return value.replace(tzinfo=None)
+        return value

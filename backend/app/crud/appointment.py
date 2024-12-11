@@ -31,10 +31,10 @@ class AppointmentDB:
     async def create_appointment(self, data):
         async with self.session() as session:
             try:
-                appointment = Appointment(**data.model_dump())
+                appointment = Appointment(**data.dict())
                 session.add(appointment)
                 
-                availability = await session.get(Availability, data["availability_id"])
+                availability = await session.get(Availability, data.availability_id)
                 if not availability:
                     raise ValueError(f"Availability with ID {data['availability_id']} not found.")
                 
