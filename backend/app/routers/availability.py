@@ -19,7 +19,7 @@ async def get_availabilities(user_details: dict = Depends(access_token_service))
     return response
 
 @availability_router.get("/availabilities/{availability_id}", response_model=SAvailabilityModel)
-async def get_availability(availability_id: int):
+async def get_availability(availability_id: int, user_details: dict = Depends(access_token_service)):
     try:
         response = await availability_service.get_availability(availability_id)
         return response
@@ -27,7 +27,7 @@ async def get_availability(availability_id: int):
         raise HTTPException(status_code=400, detail=str(e))
 
 @availability_router.post("/availabilities", response_model=SAvailabilityModel)
-async def create_availability(data: SAvailabilityModel):
+async def create_availability(data: SAvailabilityModel, user_details: dict = Depends(access_token_service)):
     try:
         availability = await AvailabilityService.create_availability(data)
         return availability  
@@ -35,7 +35,7 @@ async def create_availability(data: SAvailabilityModel):
         raise HTTPException(status_code=400, detail=str(e))
     
 @availability_router.patch("/availabilities/{availability_id}", response_model=SAvailabilityModel)
-async def update_availability(availability_id: int, data: SAvailabilityModel):
+async def update_availability(availability_id: int, data: SAvailabilityModel, user_details: dict = Depends(access_token_service)):
     try:
         availability = await AvailabilityService.update_availability(availability_id, data)
         return availability
@@ -43,7 +43,7 @@ async def update_availability(availability_id: int, data: SAvailabilityModel):
         raise HTTPException(status_code=400, detail=str(e))
 
 @availability_router.delete("/availabilities/{availability_id}")
-async def delete_availability(availability_id: int):
+async def delete_availability(availability_id: int, user_details: dict = Depends(access_token_service)):
     try:
         response = await availability_service.delete_availability(availability_id)
         return response
