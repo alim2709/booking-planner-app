@@ -1,5 +1,5 @@
 from app.crud.appointment import AppointmentDB
-from app.schemas.appointment import SAppointmentModel
+from app.schemas.appointment import CreateAppointmentModel, SAppointmentModel
 
 crud_appointment = AppointmentDB()
 
@@ -15,7 +15,7 @@ class AppointmentService:
         return result
     
     @classmethod
-    async def create_appointment(cls, data: SAppointmentModel):
+    async def create_appointment(cls, data: CreateAppointmentModel):
         if data.start_time >= data.end_time:
             raise ValueError("Start time must be earlier than end time.")
 
@@ -24,7 +24,7 @@ class AppointmentService:
         return SAppointmentModel.model_construct(new_appointment)
     
     @classmethod
-    async def update_appointment(cls, appointment_id: int, data: SAppointmentModel):
+    async def update_appointment(cls, appointment_id: int, data: SAppointmentModel): 
         if data.start_time >= data.end_time:
             raise ValueError("Start time must be earlier than end time.")
         updated_appointment = await crud_appointment.update_appointment(appointment_id, data.model_dump())

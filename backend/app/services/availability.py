@@ -1,5 +1,5 @@
 from app.crud.availability import AvailabilityDB
-from app.schemas.availability import SAvailabilityModel
+from app.schemas.availability import SAvailabilityModel, CreateAvailabilityModel
 
 crud_availability = AvailabilityDB()
 
@@ -15,7 +15,7 @@ class AvailabilityService:
         return result
     
     @classmethod
-    async def create_availability(cls, data: SAvailabilityModel):
+    async def create_availability(cls, data: CreateAvailabilityModel):
         if data.start_time >= data.end_time:
             raise ValueError("Start time must be earlier than end time.")
 
@@ -24,7 +24,7 @@ class AvailabilityService:
         return SAvailabilityModel.model_construct(new_availability)
     
     @classmethod
-    async def update_availability(cls, availability_id: int, data: SAvailabilityModel):
+    async def update_availability(cls, availability_id: int, data: CreateAvailabilityModel):
         if data.start_time >= data.end_time:
             raise ValueError("Start time must be earlier than end time.")
         updated_availability = await crud_availability.update_availability(availability_id, data.model_dump())
