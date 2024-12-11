@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import BeCodeLogo from "../../assets/icons/BeCode_color.png";
 import "./SignUpForm.scss";
 
-export const SignUpForm = ({ onCloseModal, onSuccess }) => {
+export const SignUpForm = ({ onCloseModal, onTest }) => {
     const [email, setEmail] = useState("");
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [message, setMessage] = useState("");
-
-    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -41,26 +38,27 @@ export const SignUpForm = ({ onCloseModal, onSuccess }) => {
                     response.data.username || login
                 }!`
             );
-            if (onSuccess) {
-                onSuccess();
-            }
-            console.log("Response:", response.data);
 
+            localStorage.setItem("accessToken", response.data.access_token);
+            localStorage.setItem("refreshToken", response.data.refresh_token);
+
+            // Сначала закрываем модалку регистрации
             if (onCloseModal) {
                 onCloseModal();
             }
 
-            navigate("/home");
+            // Затем открываем модалку логина
+            if (onTest) {
+                onTest();
+            }
         } catch (err) {
             if (err.response) {
-                console.error("Error:", err.response.data);
                 setMessage(
                     `Sign up error: ${
                         err.response.data.message || "Unknown error"
                     }`
                 );
             } else {
-                console.error("Request failed:", err);
                 setMessage("An error occurred during the sign-up process.");
             }
         }
@@ -89,8 +87,8 @@ export const SignUpForm = ({ onCloseModal, onSuccess }) => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    title="Please enter your email"
                 />
+
                 <label className="signup-form__label" htmlFor="login">
                     <strong>Username</strong>
                 </label>
@@ -103,8 +101,8 @@ export const SignUpForm = ({ onCloseModal, onSuccess }) => {
                     value={login}
                     onChange={(e) => setLogin(e.target.value)}
                     required
-                    title="Please enter your login"
                 />
+
                 <label className="signup-form__label" htmlFor="password">
                     <strong>Password</strong>
                 </label>
@@ -117,8 +115,8 @@ export const SignUpForm = ({ onCloseModal, onSuccess }) => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    title="Please enter your password"
                 />
+
                 <label className="signup-form__label" htmlFor="password">
                     <strong>Confirm password</strong>
                 </label>
@@ -131,10 +129,11 @@ export const SignUpForm = ({ onCloseModal, onSuccess }) => {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
-                    title="Please confirm your password"
                 />
+
                 <button className="signup-form__button">Create account</button>
             </div>
+
             {message && <p className="signup-form__message">{message}</p>}
         </form>
     );

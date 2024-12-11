@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 import "./CoachSelectionPage.scss";
 
@@ -36,12 +37,13 @@ export const CoachSelectionPage = () => {
                         </div>
                     ))}
                 </div>
-                <button
+                <Link
+                    to="/calendar"
                     className="choose-coach__next-button"
                     disabled={!selectedCoach}
                 >
                     Next
-                </button>
+                </Link>
                 {selectedCoach && (
                     <p className="choose-coach__selected-message">
                         You selected: {selectedCoach}

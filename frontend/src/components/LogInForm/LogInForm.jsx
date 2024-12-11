@@ -24,23 +24,26 @@ export const LogInForm = ({ onCloseModal, onSuccess }) => {
                 {
                     headers: {
                         "Content-Type": "application/json",
-                    }
+                    },
                 }
             );
             console.log("Login successful:", response.data);
+
+            // Save tokens to localStorage
+            localStorage.setItem("accessToken", response.data.access_token);  // Обратите внимание на правильное имя ключа
+            localStorage.setItem("refreshToken", response.data.refresh_token);  // Обратите внимание на правильное имя ключа
+            
 
             setMessage(`Login successful! Welcome, ${email}!`);
 
             if (onSuccess) {
                 onSuccess();
             }
-// everything is working?
             if (onCloseModal) {
                 onCloseModal();
             }
 
             navigate("/home");
-
         } catch (error) {
             if (error.response) {
                 console.error("Login failed:", error.response.data);
@@ -67,7 +70,9 @@ export const LogInForm = ({ onCloseModal, onSuccess }) => {
                 <span className="login-form__title"> Planning</span>
             </div>
             <div className="login-form__main">
-                <label className="login-form__label" htmlFor="email"><strong>Email</strong></label>
+                <label className="login-form__label" htmlFor="email">
+                    <strong>Email</strong>
+                </label>
                 <input
                     className="login-form__input"
                     type="email"
@@ -77,7 +82,9 @@ export const LogInForm = ({ onCloseModal, onSuccess }) => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <label className="login-form__label" htmlFor="password"><strong>Password</strong></label>
+                <label className="login-form__label" htmlFor="password">
+                    <strong>Password</strong>
+                </label>
                 <input
                     className="login-form__input"
                     type="password"
@@ -90,7 +97,7 @@ export const LogInForm = ({ onCloseModal, onSuccess }) => {
                 <button className="login-form__button">Submit</button>
             </div>
             {message && (
-                <p 
+                <p
                     className="login-form__message"
                     style={{
                         color: message.includes("failed") ? "red" : "green",
@@ -102,3 +109,4 @@ export const LogInForm = ({ onCloseModal, onSuccess }) => {
         </form>
     );
 };
+

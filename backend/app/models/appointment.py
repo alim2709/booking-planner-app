@@ -14,7 +14,9 @@ class Appointment(Base):
     id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
     student_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     coach_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
-    availability_id: Mapped[int] = mapped_column(ForeignKey("availabilities.id"), nullable=False)
+    availability_id: Mapped[int] = mapped_column(
+        ForeignKey("availabilities.id"), nullable=False
+    )
     start_time: Mapped[datetime] = mapped_column(nullable=False)
     end_time: Mapped[datetime] = mapped_column(nullable=False)
     status: Mapped[str] = mapped_column(
@@ -29,5 +31,5 @@ class Appointment(Base):
         "User", back_populates="coach_appointments", foreign_keys=[coach_id]
     )
     availability: Mapped["Availability"] = relationship(
-        "Availability", back_populates="appointments"
+        "Availability", back_populates="appointment"
     )
