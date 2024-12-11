@@ -5,6 +5,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { format, parse, startOfWeek, getDay } from "date-fns";
 import enUS from "date-fns/locale/en-US";
 import "./CalendarApp.scss";
+import axiosInstance from "../../services/apiClient";
 
 Modal.setAppElement("#root");
 
@@ -37,9 +38,20 @@ const events = [
         description: "Prepare slides for the upcoming presentation.",
         location: "Online (Zoom)",
     },
-]; // test data
+];
 
 export const CalendarApp = () => {
+    const fetchUsers = async () => {
+        try {
+            const test = await axiosInstance.get("availabilities");
+            console.log(test.data);
+        } catch (error) {
+            console.error("Error fetching users:", error);
+        }
+    };
+
+    fetchUsers();
+
     const [calendarEvents, setCalendarEvents] = useState(events);
     const [selectedEvent, setSelectedEvent] = useState(null);
 
