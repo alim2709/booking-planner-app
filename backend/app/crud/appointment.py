@@ -45,6 +45,7 @@ class AppointmentDB:
 
                 await session.commit()
                 await session.refresh(appointment)
+                await session.refresh(availability)
                 return appointment
 
             except IntegrityError as e:
