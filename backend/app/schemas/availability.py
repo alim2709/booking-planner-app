@@ -4,7 +4,7 @@ from typing import ClassVar
 
 
 class SAvailabilityModel(BaseModel):
-    id: int
+    id: int | None
     coach_id: int
     date: date
     start_time: time

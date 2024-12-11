@@ -4,7 +4,7 @@ from typing import ClassVar
 from app.utils.enums import StatusAppointment
 
 class SAppointmentModel(BaseModel):
-    id: int
+    id: int | None
     student_id: int
     coach_id: int
     availability_id: int

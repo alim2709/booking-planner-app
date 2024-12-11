@@ -11,7 +11,7 @@ from app.utils.enums import StatusAppointment
 class Appointment(Base):
     __tablename__ = "appointments"
 
-    id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
+    id: Mapped[int] = mapped_column(primary_key=True, nullable=False, autoincrement=True)
     student_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     coach_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     availability_id: Mapped[int] = mapped_column(
