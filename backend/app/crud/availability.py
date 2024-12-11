@@ -28,7 +28,8 @@ class AvailabilityDB:
 
             return response
         
-    async def create_availability(self, data):
+    async def create_availability(self, data, user):
+        
         async with self.session() as session: 
             try:
                 availability = Availability(**data.model_dump())
@@ -40,7 +41,8 @@ class AvailabilityDB:
                 await session.rollback()
                 raise ValueError(f"Failed to create availability: {str(e)}")
         
-    async def update_availability(self, availability_id, update_data):
+    async def update_availability(self, availability_id, update_data, user):
+        
         async with self.session() as session:
             query = select(Availability).filter(Availability.id == availability_id)
             request = await session.execute(query)
@@ -56,7 +58,7 @@ class AvailabilityDB:
             await session.refresh(availability)
             return availability
 
-    async def delete_availability(self, availability_id):
+    async def delete_availability(self, availability_id, user):
         async with self.session() as session:
             query = select(Availability).filter(Availability.id == availability_id)
             request = await session.execute(query)
