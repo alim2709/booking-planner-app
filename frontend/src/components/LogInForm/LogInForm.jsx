@@ -1,9 +1,19 @@
 import React, { useState } from "react";
-// import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import axios from "../../services/apiClient";
 import BeCodeLogo from "../../assets/icons/BeCode_color.png";
 import "./LogInForm.scss";
+
+const decodeJWT = (token) => {
+    try {
+        const payload = JSON.parse(atob(token.split(".")[1])); // Декодируем payload
+        console.log("Decoded JWT Payload:", payload); // Логируем весь payload
+        return payload;
+    } catch (error) {
+        console.error("Failed to decode JWT:", error);
+        return null;
+    }
+};
 
 export const LogInForm = ({ onCloseModal, onSuccess }) => {
     const [email, setEmail] = useState("");
@@ -30,9 +40,24 @@ export const LogInForm = ({ onCloseModal, onSuccess }) => {
             );
             console.log("Login successful:", response.data);
 
-            // Save tokens to localStorage
-            localStorage.setItem("accessToken", response.data.access_token); // Обратите внимание на правильное имя ключа
-            localStorage.setItem("refreshToken", response.data.refresh_token); // Обратите внимание на правильное имя ключа
+            // Сохраняем токены в localStorage
+            const accessToken = response.data.access_token;
+            const refreshToken = response.data.refresh_token;
+
+            localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("refreshToken", refreshToken);
+
+            // Декодируем токен и извлекаем user_id
+            const decodedPayload = decodeJWT(accessToken);
+            const userId = decodedPayload?.user.id || null;
+            console.log("Decoded User ID:", userId);
+
+            // Сохраняем user_id в localStorage, если он найден
+            if (userId) {
+                localStorage.setItem("userId", userId);
+            } else {
+                console.warn("User ID not found in token payload.");
+            }
 
             setMessage(`Login successful! Welcome, ${email}!`);
 
