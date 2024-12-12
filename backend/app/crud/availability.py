@@ -28,7 +28,7 @@ class AvailabilityDB:
 
             return response
         
-    async def create_availability(self, data, user):
+    async def create_availability(self, data):
         
         async with self.session() as session: 
             try:

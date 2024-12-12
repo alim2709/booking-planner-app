@@ -70,9 +70,11 @@
             cursor: pointer;
             transition: background-color 0.3s;
             margin-top: 30px;
+            margin-bottom: 40px;
 
             &:hover {
                 background-color: #2fd0d4;
+                color: #f9f9f9;
             }
         }
     }
