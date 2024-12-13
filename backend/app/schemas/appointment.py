@@ -8,8 +8,10 @@ class SAppointmentModel(BaseModel):
     student_id: int
     coach_id: int
     availability_id: int
-    start_time: datetime = Field(..., description="Start time of the appointment")
-    end_time: datetime = Field(..., description="End time of the appointment")
+    date: date
+    start_time: time
+    end_time: time
+
     status: StatusAppointment
     created_at: datetime
 
