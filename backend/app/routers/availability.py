@@ -1,9 +1,13 @@
-from typing import List
+from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException
 
 from app.dependencies.user_auth import AccessTokenBearer
-from app.schemas.availability import SAvailabilityModel, CreateAvailabilityModel
+from app.schemas.availability import (
+    SAvailabilityModel,
+    CreateAvailabilityModel,
+    SAvailabilityFilter,
+)
 from app.services.availability import AvailabilityService
 
 availability_service = AvailabilityService()
@@ -13,9 +17,12 @@ access_token_service = AccessTokenBearer()
 
 
 @availability_router.get("/availabilities", response_model=List[SAvailabilityModel])
-async def get_availabilities(user_details: dict = Depends(access_token_service)):
+async def get_availabilities(
+    filter_data: SAvailabilityFilter = Depends(SAvailabilityFilter),
+    user_details: dict = Depends(access_token_service),
+):
 
-    response = await availability_service.get_availabilities()
+    response = await availability_service.get_availabilities(filter_data=filter_data)
     return response
 
 
