@@ -1,7 +1,7 @@
 from app.database import async_session_maker
-from sqlalchemy import select
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy import select, insert
 from app.models.availability import Availability
+
 
 class AvailabilityDB:
     def __init__(self, session=async_session_maker):
@@ -10,16 +10,16 @@ class AvailabilityDB:
     async def get_availabilities(self, filter_data=None):
         async with self.session() as session:
             query = select(Availability)
-            
+
             if filter_data:
                 for key, value in filter_data.items():
                     query = query.filter(getattr(Availability, key) == value)
-            
+
             request = await session.execute(query)
             response = request.scalars().all()
 
             return response
-    
+
     async def get_availability(self, availability_id):
         async with self.session() as session:
             query = select(Availability).filter(Availability.id == availability_id)
@@ -27,22 +27,19 @@ class AvailabilityDB:
             response = request.scalars().first()
 
             return response
-        
-    async def create_availability(self, data):
-        
-        async with self.session() as session: 
-            try:
-                availability = Availability(**data.model_dump())
-                session.add(availability)
-                await session.commit()
-                await session.refresh(availability)  
-                return availability
-            except IntegrityError as e:
-                await session.rollback()
-                raise ValueError(f"Failed to create availability: {str(e)}")
-        
+
+    async def create_availability(self, **availability_data):
+
+        async with self.session() as session:
+            query = (
+                insert(Availability).values(**availability_data).returning(Availability)
+            )
+            result = await session.execute(query)
+            await session.commit()
+            return result.scalar_one()
+
     async def update_availability(self, availability_id, update_data, user):
-        
+
         async with self.session() as session:
             query = select(Availability).filter(Availability.id == availability_id)
             request = await session.execute(query)
@@ -69,4 +66,6 @@ class AvailabilityDB:
 
             await session.delete(availability)
             await session.commit()
-            return {"message": f"Appointment with id {availability_id} has been deleted."}
+            return {
+                "message": f"Appointment with id {availability_id} has been deleted."
+            }
