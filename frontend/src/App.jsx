@@ -15,7 +15,6 @@ import { CoachSelectionPage } from "./components/CoachSelectionPage";
 import { CalendarApp } from "./components/CalendarApp";
 import { CalendarAcceptationPage } from "./components/CalendarAcceptationPage";
 import { TestApi } from "./services/TestApi";
-import { TestLogin } from "./services/TestLogin";
 
 export const App = () => {
     const [showLogInModal, setShowLogInModal] = useState(false);
@@ -29,6 +28,7 @@ export const App = () => {
     };
 
     const handleOpenLogInModal = () => {
+        console.log("Opening login modal");
         setShowLogInModal(true);
     };
 
@@ -37,6 +37,7 @@ export const App = () => {
     };
 
     const handleCloseModal = () => {
+        console.log("Closing all modals");
         setShowLogInModal(false);
         setShowSignUpModal(false);
     };
@@ -66,7 +67,6 @@ export const App = () => {
                     />
                     <Route path="*" element={<NotFoundPage />} />
                     <Route path="/test-api" element={<TestApi />} />
-                    <Route path="/test-login" element={<TestLogin />} />
                 </Routes>
 
                 {showLogInModal && (
@@ -79,7 +79,8 @@ export const App = () => {
                             className="modal__content"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <LogInForm 
+                            <LogInForm
+                                onTest={handleOpenLogInModal}
                                 onCloseModal={handleCloseModal}
                                 onSuccess={() => setIsAuthenticated(true)}
                             />
@@ -99,7 +100,7 @@ export const App = () => {
                         >
                             <SignUpForm
                                 onCloseModal={handleCloseModal}
-                                onSuccess={handleSignUpSuccess}
+                                onTest={handleOpenLogInModal}
                             />
                         </div>
                     </div>
