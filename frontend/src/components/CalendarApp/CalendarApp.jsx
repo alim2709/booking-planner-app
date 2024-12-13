@@ -23,10 +23,10 @@ const localizer = dateFnsLocalizer({
     locales,
 });
 
-// Нормализация даты в UTC
-const normalizeToUTC = (dateString, timeString) => {
-    const utcDate = new Date(`${dateString}T${timeString}Z`);
-    return utcDate;
+// Нормализация SQL-даты в формат JavaScript Date
+const normalizeFromSQL = (sqlDateTime) => {
+    const [date, time] = sqlDateTime.split(" ");
+    return new Date(`${date}T${time}Z`);
 };
 
 // Преобразование объекта даты в строку ISO без миллисекунд
@@ -58,13 +58,11 @@ export const CalendarApp = () => {
                 .filter((availability) => !availability.is_booked)
                 .map((availability) => ({
                     title: "Available",
-                    start: normalizeToUTC(
-                        availability.date,
-                        availability.start_time
+                    start: normalizeFromSQL(
+                        `${availability.date} ${availability.start_time}`
                     ),
-                    end: normalizeToUTC(
-                        availability.date,
-                        availability.end_time
+                    end: normalizeFromSQL(
+                        `${availability.date} ${availability.end_time}`
                     ),
                     allDay: false,
                     availabilityId: availability.id,
@@ -87,6 +85,20 @@ export const CalendarApp = () => {
     const handleSelectSlot = async (slotInfo) => {
         console.log("Selected Slot Info:", slotInfo);
 
+        // 1. Обновляем данные перед проверкой
+        try {
+            console.log("Fetching fresh availabilities...");
+            await fetchAvailabilities(); // Получаем актуальные данные
+            console.log("Fresh availabilities fetched.");
+        } catch (error) {
+            console.error("Error refetching availabilities:", error);
+            alert(
+                "Error fetching fresh availabilities. Please refresh the page."
+            );
+            return; // Прерываем выполнение, если обновление не удалось
+        }
+
+        // 2. Подтверждение бронирования
         const confirmBooking = window.confirm(
             `Would you like to book this slot: ${slotInfo.start.toLocaleString()} - ${slotInfo.end.toLocaleString()}?`
         );
@@ -95,13 +107,6 @@ export const CalendarApp = () => {
             console.log("Booking confirmed for slot:", slotInfo);
 
             try {
-                // Лог событий в календаре
-                console.log(
-                    "Calendar Events before comparison:",
-                    calendarEvents
-                );
-
-                // Преобразуем даты в ISO формат для точного сравнения
                 const normalizedStart = toISOWithoutMilliseconds(
                     slotInfo.start
                 );
@@ -113,14 +118,24 @@ export const CalendarApp = () => {
                     normalizedEnd
                 );
 
-                // Сравниваем слот с доступностями
+                // Лог всех событий в calendarEvents
+                console.log(
+                    "Current Calendar Events (after fetch):",
+                    calendarEvents.map((event) => ({
+                        start: toISOWithoutMilliseconds(event.start),
+                        end: toISOWithoutMilliseconds(event.end),
+                        availabilityId: event.availabilityId,
+                    }))
+                );
+
+                // Сравниваем слот с актуальными данными
                 const availability = calendarEvents.find((event) => {
                     const eventStart = toISOWithoutMilliseconds(event.start);
                     const eventEnd = toISOWithoutMilliseconds(event.end);
 
                     console.log(
                         `Comparing slot: [${normalizedStart} - ${normalizedEnd}]`,
-                        `with event: [${eventStart} - ${eventEnd}]`
+                        `with event: [${eventStart} - ${eventEnd}], availabilityId: ${event.availabilityId}`
                     );
 
                     return (
@@ -129,15 +144,37 @@ export const CalendarApp = () => {
                     );
                 });
 
-                console.log("Found availability:", availability);
+                console.log(
+                    "Found availability after comparison:",
+                    availability
+                );
 
                 if (!availability) {
                     alert("This slot is no longer available.");
-                    console.log("Slot no longer available after fetch.");
+                    console.log("Slot no longer available after fresh fetch.");
                     return;
                 }
 
-                // Извлекаем ID студента из localStorage
+                // Проверяем слот на сервере для большей уверенности
+                console.log("Verifying availability on server...");
+                const availabilityCheck = await axiosInstance.get(
+                    `/availabilities/${availability.availabilityId}`
+                );
+                console.log(
+                    "Server availability check result:",
+                    availabilityCheck.data
+                );
+
+                if (availabilityCheck.data.is_booked) {
+                    alert(
+                        "Unfortunately, this slot was booked by someone else. Please choose another slot."
+                    );
+                    console.log("Slot was booked by someone else.");
+                    await fetchAvailabilities(); // Обновляем данные
+                    return;
+                }
+
+                // 3. Извлекаем ID студента из localStorage
                 const studentId = localStorage.getItem("userId");
                 if (!studentId) {
                     console.error("Student ID not found in localStorage.");
@@ -145,7 +182,7 @@ export const CalendarApp = () => {
                     return;
                 }
 
-                // Формируем объект для запроса
+                // Формируем объект для бронирования
                 const booking = {
                     student_id: parseInt(studentId, 10),
                     coach_id: coachId,
@@ -156,14 +193,14 @@ export const CalendarApp = () => {
 
                 console.log("Sending booking request with data:", booking);
 
-                // Отправляем запрос на бронирование
+                // 4. Отправляем запрос на сервер для бронирования
                 const response = await axiosInstance.post(
                     "/appointments",
                     booking
                 );
                 console.log("Appointment successfully created:", response.data);
 
-                // Обновляем данные после успешного бронирования
+                // 5. Обновляем календарь после успешного бронирования
                 await fetchAvailabilities();
                 alert("Your appointment has been booked successfully!");
             } catch (error) {
