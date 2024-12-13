@@ -220,6 +220,7 @@ export const CalendarApp = () => {
                         max={new Date(2024, 10, 26, 16, 30)}
                     />
                 </div>
+                <button className="meeting-planner__button">Next</button>
             </div>
 
             {selectedEvent && (
