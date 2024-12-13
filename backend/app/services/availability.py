@@ -9,8 +9,11 @@ crud_availability = AvailabilityDB()
 
 class AvailabilityService:
     @classmethod
-    async def get_availabilities(cls):
-        result = await crud_availability.get_availabilities()
+    async def get_availabilities(cls, filter_data=None):
+        result = await crud_availability.get_availabilities(filter_data=filter_data)
+
+        if not result:
+            raise HTTPException(status_code=404, detail="No availabilities found")
         return result
 
     @classmethod
