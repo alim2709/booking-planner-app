@@ -141,3 +141,11 @@ class UserService:
                 "message": "Logged out successfully",
             },
         )
+
+    @classmethod
+    async def get_users(cls, filter_data=None):
+        result = await crud_user.get_users(filter_data=filter_data)
+
+        if not result:
+            raise HTTPException(status_code=404, detail="No users found")
+        return result
