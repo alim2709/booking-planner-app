@@ -12,7 +12,12 @@ class AvailabilityDB:
             query = select(Availability)
 
             if filter_data:
-                for key, value in filter_data.items():
+                filter_data_dict = {
+                    key: value
+                    for key, value in filter_data.model_dump().items()
+                    if value is not None
+                }
+                for key, value in filter_data_dict.items():
                     query = query.filter(getattr(Availability, key) == value)
 
             request = await session.execute(query)

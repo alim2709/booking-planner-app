@@ -36,3 +36,9 @@ class CreateAvailabilityModel(BaseModel):
         if value.tzinfo is not None:
             return value.replace(tzinfo=None)
         return value
+
+
+class SAvailabilityFilter(BaseModel):
+    coach_id: int | None = None
+
+    is_booked: bool | None = None
