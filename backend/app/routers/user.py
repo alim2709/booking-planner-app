@@ -1,9 +1,11 @@
+from typing import List
+
 from fastapi import Depends
 
 from fastapi import APIRouter
 
 from app.dependencies.user_auth import RefreshTokenBearer, AccessTokenBearer
-from app.schemas.user import SUserCreateModel, SUserLoginModel
+from app.schemas.user import SUserCreateModel, SUserLoginModel, SUserFilter, SUserList
 from app.services.user import UserService
 
 
@@ -42,5 +44,16 @@ async def get_new_access_token(token_details: dict = Depends(refresh_token_servi
 @user_router.get("/logout/")
 async def revoke_token(token_details: dict = Depends(access_token_service)):
     response = await UserService.revoke_token(token_details)
+
+    return response
+
+
+@user_router.get("/users/", response_model=List[SUserList])
+async def get_users(
+    filter_data: SUserFilter = Depends(SUserFilter),
+    user_details: dict = Depends(access_token_service),
+):
+
+    response = await UserService.get_users(filter_data)
 
     return response
