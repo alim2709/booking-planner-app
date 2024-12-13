@@ -2,7 +2,7 @@ from datetime import datetime
 
 from app.database import Base
 
-from sqlalchemy import ForeignKey, Enum
+from sqlalchemy import ForeignKey, Enum, Date, Time
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.utils.enums import StatusAppointment
@@ -11,14 +11,17 @@ from app.utils.enums import StatusAppointment
 class Appointment(Base):
     __tablename__ = "appointments"
 
-    id: Mapped[int] = mapped_column(primary_key=True, nullable=False, autoincrement=True)
+    id: Mapped[int] = mapped_column(
+        primary_key=True, nullable=False, autoincrement=True
+    )
     student_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     coach_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     availability_id: Mapped[int] = mapped_column(
         ForeignKey("availabilities.id"), nullable=False
     )
-    start_time: Mapped[datetime] = mapped_column(nullable=False)
-    end_time: Mapped[datetime] = mapped_column(nullable=False)
+    date: Mapped[datetime.date] = mapped_column(Date, nullable=False)
+    start_time: Mapped[datetime.time] = mapped_column(Time, nullable=False)
+    end_time: Mapped[datetime.time] = mapped_column(Time, nullable=False)
     status: Mapped[str] = mapped_column(
         Enum(StatusAppointment), default=StatusAppointment.PENDING, nullable=False
     )
