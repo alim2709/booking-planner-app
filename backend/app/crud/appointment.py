@@ -5,7 +5,6 @@ from app.models.appointment import Appointment
 from app.models.availability import Availability
 
 
-
 class AppointmentDB:
     def __init__(self, session=async_session_maker):
         self.session = session
