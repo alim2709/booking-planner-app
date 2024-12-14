@@ -223,6 +223,7 @@ export const CalendarApp = () => {
                     </button>
                 </Modal>
             )}
+            <button className="meeting-planner__button">Next</button>
         </section>
     );
 };

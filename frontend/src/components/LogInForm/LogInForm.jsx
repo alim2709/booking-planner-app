@@ -6,8 +6,8 @@ import "./LogInForm.scss";
 
 const decodeJWT = (token) => {
     try {
-        const payload = JSON.parse(atob(token.split(".")[1])); // Декодируем payload
-        console.log("Decoded JWT Payload:", payload); // Логируем весь payload
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        console.log("Decoded JWT Payload:", payload);
         return payload;
     } catch (error) {
         console.error("Failed to decode JWT:", error);
@@ -38,38 +38,46 @@ export const LogInForm = ({ onCloseModal, onSuccess }) => {
                     },
                 }
             );
-            console.log("Login successful:", response.data);
+
+            console.log("Login successful, response data:", response.data);
 
             const accessToken = response.data.access_token;
             const refreshToken = response.data.refresh_token;
 
+            if (!accessToken || !refreshToken) {
+                console.error("Tokens not found in response.");
+                setMessage("Login failed: Tokens not received.");
+                return;
+            }
+
             localStorage.setItem("accessToken", accessToken);
             localStorage.setItem("refreshToken", refreshToken);
 
-            // Декодируем токен и извлекаем user_id
+            console.log("Access Token:", localStorage.getItem("accessToken"));
+            console.log("Refresh Token:", localStorage.getItem("refreshToken"));
+
             const decodedPayload = decodeJWT(accessToken);
             const userId = decodedPayload?.user.id || null;
-            console.log("Decoded User ID:", userId);
 
             if (userId) {
                 localStorage.setItem("userId", userId);
+                console.log("User ID saved:", userId);
             } else {
                 console.warn("User ID not found in token payload.");
             }
 
             setMessage(`Login successful! Welcome, ${email}!`);
 
-            if (onSuccess) {
-                onSuccess();
-            }
-            if (onCloseModal) {
-                onCloseModal();
-            }
+            if (onSuccess) onSuccess();
+            if (onCloseModal) onCloseModal();
 
             navigate("/home");
         } catch (error) {
             if (error.response) {
-                console.error("Login failed:", error.response.data);
+                console.error(
+                    "Login failed, server response:",
+                    error.response.data
+                );
                 setMessage(
                     `Login failed: ${
                         error.response.data.message || "Invalid credentials"
