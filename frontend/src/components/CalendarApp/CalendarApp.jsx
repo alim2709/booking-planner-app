@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
@@ -15,6 +16,14 @@ export const CalendarApp = () => {
     const [timeSlots, setTimeSlots] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedSlot, setSelectedSlot] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!selectedCoach) {
+            alert("Please select a coach before accessing the calendar.");
+            navigate("/selectPage"); // Перенаправляем на выбор учителя
+        }
+    }, [selectedCoach, navigate]);
 
     const coachId = coachesData[selectedCoach];
     console.log("Selected Coach:", selectedCoach);
