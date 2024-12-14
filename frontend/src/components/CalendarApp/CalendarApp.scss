@@ -31,82 +31,131 @@ main {
                 margin-bottom: 20px;
             }
         }
-    
-        .meeting-planner__calendar {
-            .meeting-planner__calendar h3 {
-                font-size: 30px;
-            }
-            .react-calendar {
-                width: 450px;
-                max-width: 100%;
-                background: #f9f9f9;
-                border: 1px solid #46c3c6;
-                font-family: 'Barlow', sans-serif;
-                line-height: 1.125em;
-                margin-top: 20px;
-                margin-bottom: 30px;
-    
-                .react-calendar__navigation button {
-                    min-width: 44px;
-                    background: none;
-                    font-size: 20px;
+
+        .meeting-planner__container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            .meeting-planner__calendar {
+                .meeting-planner__calendar h3 {
+                    font-size: 30px;
                 }
-    
-                .react-calendar__viewContainer {
-                    .react-calendar__month-view {
-                        .react-calendar__month-view__weekdays {
-                            text-align: center;
-                            text-transform: uppercase;
-                            font-size: 1em;
-                            font-weight: bold;
-                            color: #194747;
-                        }
+                .react-calendar {
+                    width: 450px;
+                    max-width: 100%;
+                    background: #f9f9f9;
+                    border: 1px solid #46c3c6;
+                    font-family: 'Barlow', sans-serif;
+                    line-height: 1.125em;
+                    margin-top: 20px;
+                    margin-bottom: 30px;
         
-                        .react-calendar__month-view__days {
-                            .react-calendar__month-view__days__day {
+                    .react-calendar__navigation button {
+                        min-width: 44px;
+                        background: none;
+                        font-size: 20px;
+                    }
+        
+                    .react-calendar__viewContainer {
+                        .react-calendar__month-view {
+                            .react-calendar__month-view__weekdays {
+                                text-align: center;
+                                text-transform: uppercase;
+                                font-size: 1em;
+                                font-weight: bold;
                                 color: #194747;
                             }
-        
-                            .react-calendar__tile {
-                                max-width: 100%;
-                                padding: 10px 6.6667px;
-                                background-color: #f9f9f9;
-                                color: #46c3c6;
-                                text-align: center;
-                                font-size: 18px;
-
-                                &:disabled {
-                                    background-color: #f9f9f9;
-                                    color: #6e6e6e;
+            
+                            .react-calendar__month-view__days {
+                                .react-calendar__month-view__days__day {
+                                    color: #194747;
                                 }
-                            }
-        
-                            .react-calendar__tile--active {
-                                background: #46c3c6;
-                                color: white;
-                                font-weight: 500;
+            
+                                .react-calendar__tile {
+                                    max-width: 100%;
+                                    padding: 10px 6.6667px;
+                                    background-color: #f9f9f9;
+                                    color: #46c3c6;
+                                    text-align: center;
+                                    font-size: 18px;
+    
+                                    &:disabled {
+                                        background-color: #f9f9f9;
+                                        color: #6e6e6e;
+                                    }
+                                }
+            
+                                .react-calendar__tile--active {
+                                    background: #46c3c6;
+                                    color: white;
+                                    font-weight: 500;
+                                }
                             }
                         }
                     }
                 }
             }
     
-            .meeting-planner__button {
-                background-color: #f9f9f9;
-                border: 1px solid black;
-                color: black;
-                font-size: 18px;
-                font-weight: bold;
-                padding: 10px 35px;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background-color 0.3s;
-                text-align: right;
+            .meeting-planner__slots {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 15px;
+                padding: 20px;
+                background: #f9f9f9;
+                border: 1px solid #46c3c6;
+                border-radius: 10px;
+                width: 60%;
     
-                &:hover {
-                    background-color: #2fd0d4;
-                    color: #f9f9f9;
+                h3 {
+                    font-size: 24px;
+                    margin-bottom: 15px;
+                    text-align: center;
+                    color: #194747;
                 }
+    
+                .slots-container {
+                    .slot-card {
+                        display: flex;
+                        align-items: center;
+                        padding: 10px 15px;
+                        border: 1px solid #6e6e6e;
+                        font-size: 16px;
+                        font-weight: 500;
+                        color: #0c2023;
+                        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        transition: background-color 0.3s, transform 0.3s;
+                    }
+    
+                    .slot-available {
+                        background-color: #46c3c6;
+                        color: white;
+                    }
+    
+                    .slot-unavailable {
+                        background-color: #194747;
+                        color:#46c3c6;
+                    }
+                }
+            }
+        }
+    
+        .meeting-planner__button {
+            background-color: #f9f9f9;
+            border: 1px solid black;
+            color: black;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px 35px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: right;
+    
+            &:hover {
+                background-color: #2fd0d4;
+                color: #f9f9f9;
             }
         }
     }
