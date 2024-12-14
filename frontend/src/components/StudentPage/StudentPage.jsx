@@ -94,44 +94,46 @@ export const StudentsPage = () => {
     }, []);
 
     return (
-        <section className="students-page">
-            <h3 className="students-page__title">My meetings</h3>
-            <div className="students-page__meetings">
-                {meetings.length > 0 ? (
-                    meetings.map((meeting) => (
-                        <div className="meeting" key={meeting.id}>
-                            <div className="meeting__info">
-                                <h3 className="meeting__name">
-                                    {meeting.coachName}
-                                </h3>
-                                <p className="meeting__date">
-                                    {meeting.formattedDate}
-                                </p>
-                                <p className="meeting__time">
-                                    {meeting.formattedStartTime} -{" "}
-                                    {meeting.formattedEndTime}
-                                </p>
+        <main>
+            <section className="students-page">
+                <h3 className="students-page__title">My meetings</h3>
+                <div className="students-page__meetings">
+                    {meetings.length > 0 ? (
+                        meetings.map((meeting) => (
+                            <div className="meeting" key={meeting.id}>
+                                <div className="meeting__info">
+                                    <h3 className="meeting__name">
+                                        {meeting.coachName}
+                                    </h3>
+                                    <p className="meeting__date">
+                                        {meeting.formattedDate}
+                                    </p>
+                                    <p className="meeting__time">
+                                        {meeting.formattedStartTime} -{" "}
+                                        {meeting.formattedEndTime}
+                                    </p>
+                                </div>
+                                <div className="meeting__actions">
+                                    <a
+                                        href="#"
+                                        className="meeting__action meeting__action--change"
+                                    >
+                                        change the meeting
+                                    </a>
+                                    <a
+                                        href="#"
+                                        className="meeting__action meeting__action--cancel"
+                                    >
+                                        cancel the meeting
+                                    </a>
+                                </div>
                             </div>
-                            <div className="meeting__actions">
-                                <a
-                                    href="#"
-                                    className="meeting__action meeting__action--change"
-                                >
-                                    change the meeting
-                                </a>
-                                <a
-                                    href="#"
-                                    className="meeting__action meeting__action--cancel"
-                                >
-                                    cancel the meeting
-                                </a>
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <p>You have no meetings scheduled.</p>
-                )}
-            </div>
-        </section>
+                        ))
+                    ) : (
+                        <p>You have no meetings scheduled.</p>
+                    )}
+                </div>
+            </section>
+        </main>
     );
 };

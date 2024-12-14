@@ -1,269 +1,113 @@
-// .meeting-planner {
-//     margin-left: 5%;
-//     margin-right: 5%;
-//     max-width: 90%;
-//     padding-top: 30px;
+main {
+    flex: 1;
 
-//     .meeting-planner__header {
-//         margin-bottom: 25px;
-//         color: #0c2023;
-//         .meeting-planner__title {
-//             font-size: 40px;
-//             margin-bottom: 40px;
-//         }
-
-//         .meeting-planner__info {
-//             font-weight: 600;
-//             font-size: 25px;
-
-//             span {
-//                 color: #46c3c6;
-//             }
-//         }
-//     }
-//     .meeting-planner__step {
-//         text-align: right;
-
-//         .meeting-planner__step-title {
-//             color: #0c2023;
-//             margin-bottom: 20px;
-//         }
-
-//         .meeting-planner__calendar {
-//             .rbc-calendar {
-//                 background-color: #a1e8e8;
-//             }
-
-//             .rbc-event {
-//                 background-color: #194747;
-//                 color: #f9f9f9;
-//             }
-//             .rbc-day-slot {
-//                 background-color: #ddd;
-//             }
-
-//             .rbc-toolbar {
-//                 button {
-//                     background-color: #194747;
-//                     color: #46c3c6;
-//                     cursor: pointer;
-//                     transition: 0.5s;
-
-//                     &:hover {
-//                         background: rgb(229, 223, 223);
-//                         color: #194747;
-//                     }
-//                 }
-//             }
-//         }
-//         .meeting-planner__step-title {
-//             text-align: left;
-//         }
-//         .meeting-planner__button {
-//             background-color: #f9f9f9;
-//             border: 1px solid black;
-//             color: black;
-//             font-size: 18px;
-//             font-weight: bold;
-//             padding: 5px 35px 5px 35px;
-//             border-radius: 5px;
-//             cursor: pointer;
-//             transition: background-color 0.3s;
-//             margin-top: 30px;
-//             margin-bottom: 40px;
-//             text-align: right;
-
-//             &:hover {
-//                 background-color: #2fd0d4;
-//                 color: #f9f9f9;
-//             }
-//         }
-//     }
-// }
-
-// .modal-overlay {
-//     background: rgba(0, 0, 0, 0.5);
-//     position: fixed;
-//     top: 0;
-//     bottom: 0;
-//     left: 0;
-//     right: 0;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     z-index: 1000;
-// }
-
-// .modal-window {
-//     background: white;
-//     padding: 20px;
-//     border-radius: 10px;
-//     max-width: 500px;
-//     width: 90%;
-//     text-align: center;
-//     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-
-//     h2 {
-//         margin-bottom: 15px;
-//     }
-
-//     p {
-//         margin-bottom: 10px;
-//         font-size: 16px;
-//     }
-
-//     .modal-close-button {
-//         background-color: #194747;
-//         color: white;
-//         padding: 10px 20px;
-//         border: none;
-//         border-radius: 5px;
-//         cursor: pointer;
-//         transition: background-color 0.3s;
-
-//         &:hover {
-//             background-color: #46c3c6;
-//         }
-//     }
-// }
-
-// @media (max-width: 768px) {
-//     .meeting-planner__header {
-//         .meeting-planner__title {
-//             font-size: 28px;
-//         }
-
-//         .meeting-planner__info {
-//             font-size: 20px;
-//         }
-//     }
-
-//     .meeting-planner__step {
-//         .meeting-planner__step-title {
-//             font-size: 18px;
-//         }
-
-//         .meeting-planner__button {
-//             font-size: 16px;
-//             padding: 5px 20px;
-//         }
-//     }
-
-//     .meeting-planner__calendar {
-//         .rbc-calendar {
-//             font-size: 14px;
-//         }
-//     }
-// }
-
-// @media (max-width: 480px) {
-//     .meeting-planner__header {
-//         .meeting-planner__title {
-//             font-size: 22px;
-//             text-align: center;
-//         }
-
-//         .meeting-planner__info {
-//             font-size: 18px;
-
-//             span {
-//                 font-size: 18px;
-//             }
-//         }
-//     }
-
-//     .meeting-planner__step {
-//         text-align: center;
-
-//         .meeting-planner__step-title {
-//             font-size: 16px;
-//             margin-bottom: 15px;
-//         }
-
-//         .meeting-planner__button {
-//             font-size: 14px;
-//             padding: 5px 15px;
-//         }
-//     }
-
-//     .meeting-planner__calendar {
-//         .rbc-calendar {
-//             font-size: 12px;
-//         }
-//     }
-// }
-
-.meeting-planner {
-    margin: 5%;
-    max-width: 90%;
-    padding-top: 30px;
-
-    .meeting-planner__header {
-        margin-bottom: 25px;
-        color: #0c2023;
-
-        .meeting-planner__title {
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
-
-        .meeting-planner__info {
-            font-weight: 600;
-            font-size: 25px;
-
-            span {
-                color: #46c3c6;
+    .meeting-planner {
+        margin-left: 5%;
+        margin-right: 5%;
+        max-width: 90%;
+        padding-top: 30px;
+    
+        &__header {
+            .meeting-planner__title {
+                font-size: 40px;
+                margin-bottom: 20px;
+                color: #0c2023;
+            }
+    
+            .meeting-planner__info {
+                font-weight: 600;
+                font-size: 18px;
+                margin-bottom: 20px;
+    
+                span {
+                    color: #46c3c6;
+                }
             }
         }
-    }
-
-    .meeting-planner__step {
-        .meeting-planner__step-title {
-            color: #0c2023;
-            margin-bottom: 20px;
+    
+        .meeting-planner__step {
+            .meeting-planner__step-title {
+                color: #0c2023;
+                margin-bottom: 20px;
+            }
         }
-    }
+    
+        .meeting-planner__calendar {
+            .meeting-planner__calendar h3 {
+                font-size: 30px;
+            }
+            .react-calendar {
+                width: 450px;
+                max-width: 100%;
+                background: #f9f9f9;
+                border: 1px solid #46c3c6;
+                font-family: 'Barlow', sans-serif;
+                line-height: 1.125em;
+                margin-top: 20px;
+                margin-bottom: 30px;
+    
+                .react-calendar__navigation button {
+                    min-width: 44px;
+                    background: none;
+                    font-size: 20px;
+                }
+    
+                .react-calendar__viewContainer {
+                    .react-calendar__month-view {
+                        .react-calendar__month-view__weekdays {
+                            text-align: center;
+                            text-transform: uppercase;
+                            font-size: 1em;
+                            font-weight: bold;
+                            color: #194747;
+                        }
+        
+                        .react-calendar__month-view__days {
+                            .react-calendar__month-view__days__day {
+                                color: #194747;
+                            }
+        
+                            .react-calendar__tile {
+                                max-width: 100%;
+                                padding: 10px 6.6667px;
+                                background-color: #f9f9f9;
+                                color: #46c3c6;
+                                text-align: center;
+                                font-size: 18px;
 
-    .meeting-planner__calendar {
-        // .rbc-calendar {
-        //     background-color: #a1e8e8;
-        // }
-
-        // .rbc-event {
-        //     background-color: #194747;
-        //     color: #f9f9f9;
-        // }
-
-        // .rbc-toolbar {
-        //     button {
-        //         background-color: #194747;
-        //         color: #1fc2c5;
-        //         cursor: pointer;
-        //         transition: 0.5s;
-
-        //         &:hover {
-        //             background: #e5dfdf;
-        //             color: #194747;
-        //         }
-        //     }
-        // }
-    }
-
-    .meeting-planner__button {
-        background-color: #f9f9f9;
-        border: 1px solid black;
-        color: black;
-        font-size: 18px;
-        font-weight: bold;
-        padding: 10px 35px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        text-align: right;
-
-        &:hover {
-            background-color: #2fd0d4;
-            color: #f9f9f9;
+                                &:disabled {
+                                    background-color: #f9f9f9;
+                                    color: #6e6e6e;
+                                }
+                            }
+        
+                            .react-calendar__tile--active {
+                                background: #46c3c6;
+                                color: white;
+                                font-weight: 500;
+                            }
+                        }
+                    }
+                }
+            }
+    
+            .meeting-planner__button {
+                background-color: #f9f9f9;
+                border: 1px solid black;
+                color: black;
+                font-size: 18px;
+                font-weight: bold;
+                padding: 10px 35px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+                text-align: right;
+    
+                &:hover {
+                    background-color: #2fd0d4;
+                    color: #f9f9f9;
+                }
+            }
         }
     }
 }

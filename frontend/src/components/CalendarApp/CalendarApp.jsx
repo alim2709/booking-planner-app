@@ -133,97 +133,99 @@ export const CalendarApp = () => {
     };
 
     return (
-        <section className="meeting-planner">
-            <div className="meeting-planner__header">
-                <h2 className="meeting-planner__title">Plan a meeting</h2>
-                <p className="meeting-planner__info">
-                    Coach, you've chosen: <span>{selectedCoach}</span>
-                </p>
-            </div>
-
-            <div className="meeting-planner__calendar">
-                <h3>Select a date</h3>
-                <Calendar
-                    onChange={handleDateChange}
-                    value={selectedDate}
-                    tileDisabled={({ date }) =>
-                        !availabilities.some(
-                            (slot) =>
-                                slot.date === date.toISOString().split("T")[0]
-                        )
-                    }
-                />
-            </div>
-
-            {selectedDate && (
-                <div className="meeting-planner__slots">
-                    <h3>Available slots for {selectedDate.toDateString()}:</h3>
-                    {timeSlots.length > 0 ? (
-                        <ul>
-                            {timeSlots.map((slot, index) => (
-                                <li
-                                    key={index}
-                                    className={
-                                        slot.available
-                                            ? "slot-available"
-                                            : "slot-unavailable"
-                                    }
-                                >
-                                    {slot.start.toLocaleTimeString([], {
-                                        hour: "2-digit",
-                                        minute: "2-digit",
-                                    })}{" "}
-                                    -{" "}
-                                    {slot.end.toLocaleTimeString([], {
-                                        hour: "2-digit",
-                                        minute: "2-digit",
-                                    })}
-                                    {slot.available ? (
-                                        <button
-                                            onClick={() => openSlotModal(slot)}
-                                        >
-                                            Book
-                                        </button>
-                                    ) : (
-                                        <span> Already booked</span>
-                                    )}
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>No slots available for this date.</p>
-                    )}
-                </div>
-            )}
-
-            {modalIsOpen && selectedSlot && (
-                <Modal
-                    isOpen={modalIsOpen}
-                    onRequestClose={() => setModalIsOpen(false)}
-                    contentLabel="Confirm Booking"
-                    className="modal-window"
-                    overlayClassName="modal-overlay"
-                >
-                    <h2>Confirm Booking</h2>
-                    <p>
-                        You are booking the slot:{" "}
-                        {selectedSlot.start.toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                        })}{" "}
-                        -{" "}
-                        {selectedSlot.end.toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                        })}
+        <main>
+            <section className="meeting-planner">
+                <div className="meeting-planner__header">
+                    <h2 className="meeting-planner__title">Plan a meeting</h2>
+                    <p className="meeting-planner__info">
+                        Coach, you've chosen: <span>{selectedCoach}</span>
                     </p>
-                    <button onClick={confirmBooking}>Confirm</button>
-                    <button onClick={() => setModalIsOpen(false)}>
-                        Cancel
-                    </button>
-                </Modal>
-            )}
-            <button className="meeting-planner__button">Next</button>
-        </section>
+                </div>
+
+                <div className="meeting-planner__calendar">
+                    <h3>Step 2 - Choose the meeting date</h3>
+                    <Calendar
+                        onChange={handleDateChange}
+                        value={selectedDate}
+                        tileDisabled={({ date }) =>
+                            !availabilities.some(
+                                (slot) =>
+                                    slot.date === date.toISOString().split("T")[0]
+                            )
+                        }
+                    />
+                </div>
+
+                {selectedDate && (
+                    <div className="meeting-planner__slots">
+                        <h3>Choose the meeting time</h3>
+                        {timeSlots.length > 0 ? (
+                            <ul>
+                                {timeSlots.map((slot, index) => (
+                                    <li
+                                        key={index}
+                                        className={
+                                            slot.available
+                                                ? "slot-available"
+                                                : "slot-unavailable"
+                                        }
+                                    >
+                                        {slot.start.toLocaleTimeString([], {
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                        })}{" "}
+                                        -{" "}
+                                        {slot.end.toLocaleTimeString([], {
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                        })}
+                                        {slot.available ? (
+                                            <button
+                                                onClick={() => openSlotModal(slot)}
+                                            >
+                                                Book
+                                            </button>
+                                        ) : (
+                                            <span> Already booked</span>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p>No slots available for this date.</p>
+                        )}
+                    </div>
+                )}
+
+                {modalIsOpen && selectedSlot && (
+                    <Modal
+                        isOpen={modalIsOpen}
+                        onRequestClose={() => setModalIsOpen(false)}
+                        contentLabel="Confirm Booking"
+                        className="modal-window"
+                        overlayClassName="modal-overlay"
+                    >
+                        <h2>Confirm Booking</h2>
+                        <p>
+                            You are booking the slot:{" "}
+                            {selectedSlot.start.toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                            })}{" "}
+                            -{" "}
+                            {selectedSlot.end.toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                            })}
+                        </p>
+                        <button onClick={confirmBooking}>Confirm</button>
+                        <button onClick={() => setModalIsOpen(false)}>
+                            Cancel
+                        </button>
+                    </Modal>
+                )}
+                <button className="meeting-planner__button">Next</button>
+            </section>
+        </main>
     );
 };
