@@ -28,9 +28,16 @@
         .dashboard__greeting {
             font-weight: 700;
             margin-bottom: 10px;
+            span {
+                color: #46c3c6;
+            }
         }
         .dashboard__meetings {
             font-weight: 700;
+
+            span {
+                color: #46c3c6;
+            }
         }
     }
     .dashboard__actions {

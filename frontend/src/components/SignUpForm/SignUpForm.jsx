@@ -33,35 +33,60 @@ export const SignUpForm = ({ onCloseModal, onTest }) => {
                 }
             );
 
-            setMessage(
-                `Sign up successful! Welcome, ${
-                    response.data.username || login
-                }!`
-            );
-
+            console.log("Sign up response:", response.data);
             localStorage.setItem("accessToken", response.data.access_token);
             localStorage.setItem("refreshToken", response.data.refresh_token);
 
-            // Сначала закрываем модалку регистрации
-            if (onCloseModal) {
-                onCloseModal();
-            }
-
-            // Затем открываем модалку логина
-            if (onTest) {
-                onTest();
-            }
+            if (onCloseModal) onCloseModal();
+            if (onTest) onTest();
         } catch (err) {
-            if (err.response) {
-                setMessage(
-                    `Sign up error: ${
-                        err.response.data.message || "Unknown error"
-                    }`
-                );
-            } else {
-                setMessage("An error occurred during the sign-up process.");
-            }
+            console.error("Error during sign-up:", err.response || err);
         }
+
+        // try {
+        //     const response = await axios.post(
+        //         "http://localhost:7777/api/signUp",
+        //         {
+        //             username: login.trim(),
+        //             email: email.trim(),
+        //             password: password,
+        //         },
+        //         {
+        //             headers: {
+        //                 "Content-Type": "application/json",
+        //             },
+        //         }
+        //     );
+
+        //     setMessage(
+        //         `Sign up successful! Welcome, ${
+        //             response.data.username || login
+        //         }!`
+        //     );
+
+        //     localStorage.setItem("accessToken", response.data.access_token);
+        //     localStorage.setItem("refreshToken", response.data.refresh_token);
+
+        //     // Сначала закрываем модалку регистрации
+        //     if (onCloseModal) {
+        //         onCloseModal();
+        //     }
+
+        //     // Затем открываем модалку логина
+        //     if (onTest) {
+        //         onTest();
+        //     }
+        // } catch (err) {
+        //     if (err.response) {
+        //         setMessage(
+        //             `Sign up error: ${
+        //                 err.response.data.message || "Unknown error"
+        //             }`
+        //         );
+        //     } else {
+        //         setMessage("An error occurred during the sign-up process.");
+        //     }
+        // }
     };
 
     return (
