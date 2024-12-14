@@ -40,7 +40,6 @@ export const LogInForm = ({ onCloseModal, onSuccess }) => {
             );
             console.log("Login successful:", response.data);
 
-            // Сохраняем токены в localStorage
             const accessToken = response.data.access_token;
             const refreshToken = response.data.refresh_token;
 
@@ -52,7 +51,6 @@ export const LogInForm = ({ onCloseModal, onSuccess }) => {
             const userId = decodedPayload?.user.id || null;
             console.log("Decoded User ID:", userId);
 
-            // Сохраняем user_id в localStorage, если он найден
             if (userId) {
                 localStorage.setItem("userId", userId);
             } else {

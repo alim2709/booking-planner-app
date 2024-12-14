@@ -99,6 +99,7 @@
 // };
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import headerImage from "../../assets/icons/BeCode_color_header.png";
 import user_logo from "../../assets/icons/circle.png";
 import axiosInstance from "../../services/apiClient";
@@ -111,6 +112,7 @@ export const Header = ({
     onLogout,
 }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const navigate = useNavigate();
 
     const handleLogout = async () => {
         try {
@@ -131,8 +133,7 @@ export const Header = ({
             // Закрываем дропдаун
             setIsDropdownOpen(false);
 
-            // Перенаправляем пользователя на страницу логина
-            window.location.href = "/login";
+            navigate("/");
         } catch (error) {
             console.error("Error during logout:", error);
         }
