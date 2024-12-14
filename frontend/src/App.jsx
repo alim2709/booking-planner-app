@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.scss";
 
 import { Footer } from "./components/Footer";
@@ -21,6 +21,16 @@ export const App = () => {
     const [showSignUpModal, setShowSignUpModal] = useState(false);
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        const accessToken = localStorage.getItem("accessToken");
+        const refreshToken = localStorage.getItem("refreshToken");
+
+        // Если токены есть в localStorage, устанавливаем авторизацию
+        if (accessToken && refreshToken) {
+            setIsAuthenticated(true);
+        }
+    }, []);
 
     const handleSignUpSuccess = () => {
         setIsAuthenticated(true); // Устанавливаем авторизацию после успешной регистрации
