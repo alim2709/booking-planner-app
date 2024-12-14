@@ -26,7 +26,6 @@ export const App = () => {
         const accessToken = localStorage.getItem("accessToken");
         const refreshToken = localStorage.getItem("refreshToken");
 
-        // Если токены есть в localStorage, устанавливаем авторизацию
         if (accessToken && refreshToken) {
             setIsAuthenticated(true);
         }

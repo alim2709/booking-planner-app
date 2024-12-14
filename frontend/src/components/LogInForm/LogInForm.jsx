@@ -6,8 +6,8 @@ import "./LogInForm.scss";
 
 const decodeJWT = (token) => {
     try {
-        const payload = JSON.parse(atob(token.split(".")[1])); // Декодируем payload
-        console.log("Decoded JWT Payload:", payload); // Логируем весь payload
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        console.log("Decoded JWT Payload:", payload);
         return payload;
     } catch (error) {
         console.error("Failed to decode JWT:", error);

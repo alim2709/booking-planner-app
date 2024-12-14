@@ -18,20 +18,23 @@ export const Header = ({
         try {
             await axiosInstance.get("/logout/");
             console.log("Logout successful");
+        } catch (error) {
+            console.error("Logout request failed:", error);
 
+            if (
+                error.response?.status === 403 ||
+                error.response?.status === 401
+            ) {
+                console.warn(
+                    "Token expired or invalid. Clearing local storage."
+                );
+            }
+        } finally {
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
             localStorage.removeItem("userId");
 
-            if (onLogout) {
-                onLogout();
-            }
-
-            setIsDropdownOpen(false);
-
             navigate("/");
-        } catch (error) {
-            console.error("Error during logout:", error);
         }
     };
 
