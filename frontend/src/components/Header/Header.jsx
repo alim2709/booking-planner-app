@@ -16,21 +16,17 @@ export const Header = ({
 
     const handleLogout = async () => {
         try {
-            // Отправляем запрос на сервер для аннулирования токенов
             await axiosInstance.get("/logout/");
             console.log("Logout successful");
 
-            // Удаляем токены из localStorage
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
             localStorage.removeItem("userId");
 
-            // Вызываем переданный проп `onLogout`
             if (onLogout) {
                 onLogout();
             }
 
-            // Закрываем дропдаун
             setIsDropdownOpen(false);
 
             navigate("/");

@@ -21,7 +21,7 @@ export const CalendarApp = () => {
     useEffect(() => {
         if (!selectedCoach) {
             alert("Please select a coach before accessing the calendar.");
-            navigate("/selectPage"); // Перенаправляем на выбор учителя
+            navigate("/selectPage");
         }
     }, [selectedCoach, navigate]);
 
@@ -67,7 +67,6 @@ export const CalendarApp = () => {
         setTimeSlots(slots);
     };
 
-    // Выбор даты
     const handleDateChange = (date) => {
         console.log("Selected date:", date);
         setSelectedDate(date);
@@ -98,7 +97,6 @@ export const CalendarApp = () => {
                 selectedSlot.id
             );
 
-            // Отправляем запрос на бронирование
             await axiosInstance.post("/appointments", {
                 availability_id: selectedSlot.id,
                 start_time: selectedSlot.start.toISOString(),
@@ -149,7 +147,6 @@ export const CalendarApp = () => {
                     onChange={handleDateChange}
                     value={selectedDate}
                     tileDisabled={({ date }) =>
-                        // Отключаем даты без доступных слотов
                         !availabilities.some(
                             (slot) =>
                                 slot.date === date.toISOString().split("T")[0]
