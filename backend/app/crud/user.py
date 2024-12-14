@@ -15,6 +15,23 @@ class UserDB:
 
             return result.scalar_one_or_none()
 
+    async def get_users(self, filter_data=None):
+        async with self.session() as session:
+            query = select(User)
+            if filter_data:
+                filter_data_dict = {
+                    key: value
+                    for key, value in filter_data.model_dump().items()
+                    if value is not None
+                }
+                for key, value in filter_data_dict.items():
+                    query = query.filter(getattr(User, key) == value)
+
+            request = await session.execute(query)
+            response = request.scalars().all()
+
+            return response
+
     async def get_coach_by_id(self, coach_id: int):
         async with self.session() as session:
             query = select(User).where(User.id == coach_id, User.role == UserRole.COACH)
