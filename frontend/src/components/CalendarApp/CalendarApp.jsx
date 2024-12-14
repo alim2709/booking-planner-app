@@ -1,45 +1,29 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
-import { Calendar, dateFnsLocalizer } from "react-big-calendar";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import { format, parse, startOfWeek, getDay } from "date-fns";
-import enUS from "date-fns/locale/en-US";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import { useSearchParams } from "react-router-dom";
 import coachesData from "../../services/coaches.json";
 import axiosInstance from "../../services/apiClient";
 import "./CalendarApp.scss";
 
-Modal.setAppElement("#root");
-
-const locales = {
-    "en-US": enUS,
-};
-
-const localizer = dateFnsLocalizer({
-    format,
-    parse,
-    startOfWeek: () => startOfWeek(new Date(), { weekStartsOn: 1 }),
-    getDay,
-    locales,
-});
-
-// Нормализация даты в UTC
-const normalizeToUTC = (dateString, timeString) => {
-    const utcDate = new Date(`${dateString}T${timeString}Z`);
-    return utcDate;
-};
-
-// Преобразование объекта даты в строку ISO без миллисекунд
-const toISOWithoutMilliseconds = (date) => {
-    const isoString = date.toISOString();
-    return isoString.split(".")[0] + "Z";
-};
-
 export const CalendarApp = () => {
     const [searchParams] = useSearchParams();
     const selectedCoach = searchParams.get("coach");
-    const [calendarEvents, setCalendarEvents] = useState([]);
-    const [selectedEvent, setSelectedEvent] = useState(null);
+    const [availabilities, setAvailabilities] = useState([]);
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [timeSlots, setTimeSlots] = useState([]);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [selectedSlot, setSelectedSlot] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!selectedCoach) {
+            alert("Please select a coach before accessing the calendar.");
+            navigate("/selectPage");
+        }
+    }, [selectedCoach, navigate]);
 
     const coachId = coachesData[selectedCoach];
     console.log("Selected Coach:", selectedCoach);
@@ -52,26 +36,8 @@ export const CalendarApp = () => {
             const response = await axiosInstance.get(
                 `/availabilities?coach_id=${coachId}`
             );
-            console.log("Availabilities API Response:", response.data);
-
-            const availableSlots = response.data
-                .filter((availability) => !availability.is_booked)
-                .map((availability) => ({
-                    title: "Available",
-                    start: normalizeToUTC(
-                        availability.date,
-                        availability.start_time
-                    ),
-                    end: normalizeToUTC(
-                        availability.date,
-                        availability.end_time
-                    ),
-                    allDay: false,
-                    availabilityId: availability.id,
-                }));
-
-            setCalendarEvents(availableSlots);
-            console.log("Mapped Events:", availableSlots);
+            console.log("Availabilities response:", response.data);
+            setAvailabilities(response.data);
         } catch (error) {
             console.error("Error fetching availabilities:", error);
         }
@@ -83,115 +49,87 @@ export const CalendarApp = () => {
         }
     }, [coachId]);
 
-    // Бронирование встречи
-    const handleSelectSlot = async (slotInfo) => {
-        console.log("Selected Slot Info:", slotInfo);
-
-        const confirmBooking = window.confirm(
-            `Would you like to book this slot: ${slotInfo.start.toLocaleString()} - ${slotInfo.end.toLocaleString()}?`
+    // Генерация временных слотов, синхронизированных с availabilities
+    const generateTimeSlots = (date) => {
+        const selectedDateString = date.toISOString().split("T")[0];
+        const availabilitiesForDate = availabilities.filter(
+            (availability) => availability.date === selectedDateString
         );
 
-        if (confirmBooking) {
-            console.log("Booking confirmed for slot:", slotInfo);
+        const slots = availabilitiesForDate.map((availability) => ({
+            start: new Date(`${availability.date}T${availability.start_time}`),
+            end: new Date(`${availability.date}T${availability.end_time}`),
+            available: !availability.is_booked,
+            id: availability.id,
+        }));
 
-            try {
-                // Лог событий в календаре
-                console.log(
-                    "Calendar Events before comparison:",
-                    calendarEvents
-                );
+        console.log("Time slots generated:", slots);
+        setTimeSlots(slots);
+    };
 
-                // Преобразуем даты в ISO формат для точного сравнения
-                const normalizedStart = toISOWithoutMilliseconds(
-                    slotInfo.start
-                );
-                const normalizedEnd = toISOWithoutMilliseconds(slotInfo.end);
+    const handleDateChange = (date) => {
+        console.log("Selected date:", date);
+        setSelectedDate(date);
+        generateTimeSlots(date);
+    };
 
-                console.log(
-                    "Normalized Slot Info for comparison:",
-                    normalizedStart,
-                    normalizedEnd
-                );
-
-                // Сравниваем слот с доступностями
-                const availability = calendarEvents.find((event) => {
-                    const eventStart = toISOWithoutMilliseconds(event.start);
-                    const eventEnd = toISOWithoutMilliseconds(event.end);
-
-                    console.log(
-                        `Comparing slot: [${normalizedStart} - ${normalizedEnd}]`,
-                        `with event: [${eventStart} - ${eventEnd}]`
-                    );
-
-                    return (
-                        eventStart === normalizedStart &&
-                        eventEnd === normalizedEnd
-                    );
-                });
-
-                console.log("Found availability:", availability);
-
-                if (!availability) {
-                    alert("This slot is no longer available.");
-                    console.log("Slot no longer available after fetch.");
-                    return;
-                }
-
-                // Извлекаем ID студента из localStorage
-                const studentId = localStorage.getItem("userId");
-                if (!studentId) {
-                    console.error("Student ID not found in localStorage.");
-                    alert("You are not logged in. Please log in first.");
-                    return;
-                }
-
-                // Формируем объект для запроса
-                const booking = {
-                    student_id: parseInt(studentId, 10),
-                    coach_id: coachId,
-                    availability_id: availability.availabilityId,
-                    start_time: normalizedStart,
-                    end_time: normalizedEnd,
-                };
-
-                console.log("Sending booking request with data:", booking);
-
-                // Отправляем запрос на бронирование
-                const response = await axiosInstance.post(
-                    "/appointments",
-                    booking
-                );
-                console.log("Appointment successfully created:", response.data);
-
-                // Обновляем данные после успешного бронирования
-                await fetchAvailabilities();
-                alert("Your appointment has been booked successfully!");
-            } catch (error) {
-                if (error.response) {
-                    console.error("Error from API:", error.response.data);
-                    alert(
-                        `Failed to book the appointment: ${
-                            error.response.data.message || "Unknown error"
-                        }`
-                    );
-                } else {
-                    console.error("Error booking appointment:", error);
-                    alert("An unexpected error occurred. Please try again.");
-                }
-            }
-        } else {
-            console.log("Booking cancelled by user.");
+    // Открытие модального окна для подтверждения бронирования
+    const openSlotModal = (slot) => {
+        if (!slot.available) {
+            alert("This slot is not available.");
+            return;
         }
+        console.log("Opening slot modal:", slot);
+        setSelectedSlot(slot);
+        setModalIsOpen(true);
     };
 
-    const handleSelectEvent = (event) => {
-        console.log("Selected Event:", event);
-        setSelectedEvent(event);
-    };
+    // Подтверждение бронирования
+    const confirmBooking = async () => {
+        if (!selectedSlot || !selectedSlot.id) {
+            console.warn("No slot selected for booking.");
+            return;
+        }
 
-    const closeModalWindow = () => {
-        console.log("Closing event details modal.");
-        setSelectedEvent(null);
+        try {
+            console.log(
+                "Sending booking request for availability ID:",
+                selectedSlot.id
+            );
+
+            await axiosInstance.post("/appointments", {
+                availability_id: selectedSlot.id,
+                start_time: selectedSlot.start.toISOString(),
+                end_time: selectedSlot.end.toISOString(),
+            });
+
+            alert("Your appointment has been booked successfully!");
+
+            // 1. Локально обновляем availabilities и timeSlots
+            const updatedAvailabilities = availabilities.map((availability) =>
+                availability.id === selectedSlot.id
+                    ? { ...availability, is_booked: true }
+                    : availability
+            );
+
+            setAvailabilities(updatedAvailabilities);
+
+            const updatedTimeSlots = timeSlots.map((slot) =>
+                slot.id === selectedSlot.id
+                    ? { ...slot, available: false }
+                    : slot
+            );
+
+            setTimeSlots(updatedTimeSlots);
+
+            // 2. Закрываем модальное окно
+            setModalIsOpen(false);
+        } catch (error) {
+            console.error("Error booking appointment:", error);
+            alert(
+                "An error occurred while booking the appointment. Please try again."
+            );
+        }
     };
 
     return (
@@ -202,49 +140,86 @@ export const CalendarApp = () => {
                     Coach, you've chosen: <span>{selectedCoach}</span>
                 </p>
             </div>
-            <div className="meeting-planner__step">
-                <h2 className="meeting-planner__step-title">
-                    Step 2 - Choose the free date & time
-                </h2>
-                <div className="meeting-planner__calendar">
-                    <Calendar
-                        localizer={localizer}
-                        events={calendarEvents}
-                        startAccessor="start"
-                        endAccessor="end"
-                        style={{ height: 500 }}
-                        selectable
-                        onSelectSlot={handleSelectSlot}
-                        onSelectEvent={handleSelectEvent}
-                        min={new Date(2024, 10, 26, 9, 30)}
-                        max={new Date(2024, 10, 26, 16, 30)}
-                    />
-                </div>
-                <button className="meeting-planner__button">Next</button>
+
+            <div className="meeting-planner__calendar">
+                <h3>Select a date</h3>
+                <Calendar
+                    onChange={handleDateChange}
+                    value={selectedDate}
+                    tileDisabled={({ date }) =>
+                        !availabilities.some(
+                            (slot) =>
+                                slot.date === date.toISOString().split("T")[0]
+                        )
+                    }
+                />
             </div>
 
-            {selectedEvent && (
+            {selectedDate && (
+                <div className="meeting-planner__slots">
+                    <h3>Available slots for {selectedDate.toDateString()}:</h3>
+                    {timeSlots.length > 0 ? (
+                        <ul>
+                            {timeSlots.map((slot, index) => (
+                                <li
+                                    key={index}
+                                    className={
+                                        slot.available
+                                            ? "slot-available"
+                                            : "slot-unavailable"
+                                    }
+                                >
+                                    {slot.start.toLocaleTimeString([], {
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                    })}{" "}
+                                    -{" "}
+                                    {slot.end.toLocaleTimeString([], {
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                    })}
+                                    {slot.available ? (
+                                        <button
+                                            onClick={() => openSlotModal(slot)}
+                                        >
+                                            Book
+                                        </button>
+                                    ) : (
+                                        <span> Already booked</span>
+                                    )}
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>No slots available for this date.</p>
+                    )}
+                </div>
+            )}
+
+            {modalIsOpen && selectedSlot && (
                 <Modal
-                    isOpen={true}
-                    onRequestClose={closeModalWindow}
-                    contentLabel="Event Details"
+                    isOpen={modalIsOpen}
+                    onRequestClose={() => setModalIsOpen(false)}
+                    contentLabel="Confirm Booking"
                     className="modal-window"
                     overlayClassName="modal-overlay"
                 >
-                    <h2>{selectedEvent.title}</h2>
+                    <h2>Confirm Booking</h2>
                     <p>
-                        <strong>Start:</strong>{" "}
-                        {selectedEvent.start.toLocaleString()}
+                        You are booking the slot:{" "}
+                        {selectedSlot.start.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                        })}{" "}
+                        -{" "}
+                        {selectedSlot.end.toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                        })}
                     </p>
-                    <p>
-                        <strong>End:</strong>{" "}
-                        {selectedEvent.end.toLocaleString()}
-                    </p>
-                    <button
-                        onClick={closeModalWindow}
-                        className="modal-close-button"
-                    >
-                        Close
+                    <button onClick={confirmBooking}>Confirm</button>
+                    <button onClick={() => setModalIsOpen(false)}>
+                        Cancel
                     </button>
                 </Modal>
             )}
