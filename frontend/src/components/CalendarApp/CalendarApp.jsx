@@ -186,8 +186,8 @@ export const CalendarApp = () => {
                                 minute: "2-digit",
                             })}
                         </p>
-                        <button onClick={confirmBooking}>Confirm</button>
-                        <button onClick={() => setModalIsOpen(false)}>
+                        <button className="modal-confirm-button" onClick={confirmBooking}>Confirm</button>
+                        <button className="modal-close-button" onClick={() => setModalIsOpen(false)}>
                             Cancel
                         </button>
                     </Modal>

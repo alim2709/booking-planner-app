@@ -1,5 +1,6 @@
 main {
     flex: 1;
+    margin-bottom: 30px;
 
     .meeting-planner {
         margin-left: 5%;
@@ -36,10 +37,28 @@ main {
             display: flex;
             flex-direction: row;
             justify-content: space-between;
+            gap: 20px;
+
+            .meeting-planner__calendar, 
+            .meeting-planner__slots {
+                flex: 1; /* Кожен блок займатиме половину доступної ширини */
+                height: 400px; /* Встановлення однакової висоти */
+                box-sizing: border-box; /* Врахування padding і border у розрахунку розмірів */
+            }
 
             .meeting-planner__calendar {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: start; /* Вирівнювання вмісту за верхом */
+                padding: 20px;
+                background: #f9f9f9;
+                border: 1px solid #46c3c6;
                 .meeting-planner__calendar h3 {
-                    font-size: 30px;
+                    font-size: 34px;
+                    margin-bottom: 15px;
+                    text-align: center;
+                    color: #194747;
                 }
                 .react-calendar {
                     width: 450px;
@@ -69,7 +88,7 @@ main {
             
                             .react-calendar__month-view__days {
                                 .react-calendar__month-view__days__day {
-                                    color: #194747;
+                                    color: #a3a3a3;
                                 }
             
                                 .react-calendar__tile {
@@ -78,11 +97,11 @@ main {
                                     background-color: #f9f9f9;
                                     color: #46c3c6;
                                     text-align: center;
-                                    font-size: 18px;
+                                    font-size: 20px;
     
                                     &:disabled {
                                         background-color: #f9f9f9;
-                                        color: #6e6e6e;
+                                        color: #a3a3a3;
                                     }
                                 }
             
@@ -99,14 +118,12 @@ main {
     
             .meeting-planner__slots {
                 display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
+                flex-direction: column;
                 gap: 15px;
                 padding: 20px;
                 background: #f9f9f9;
                 border: 1px solid #46c3c6;
-                border-radius: 10px;
-                width: 60%;
+                box-sizing: border-box;
     
                 h3 {
                     font-size: 24px;
@@ -116,16 +133,26 @@ main {
                 }
     
                 .slots-container {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr); /* 2 колонки */
+                    grid-gap: 15px; /* Відстань між слотами */
+
                     .slot-card {
                         display: flex;
                         align-items: center;
                         padding: 10px 15px;
+                        width: 250px;
                         border: 1px solid #6e6e6e;
                         font-size: 16px;
                         font-weight: 500;
-                        color: #0c2023;
                         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                        transition: background-color 0.3s, transform 0.3s;
+                        // transition: background-color 0.3s, transform 0.3s;
+
+                        &:hover {
+                            background-color: white;
+                            color: #46c3c6;
+                            font-size: 18px;
+                        }
                     }
     
                     .slot-available {
@@ -175,9 +202,9 @@ main {
 }
 
 .modal-window {
-    background: white;
+    background: #f9f9f9;
+    color: #0c2023;
     padding: 20px;
-    border-radius: 10px;
     max-width: 500px;
     width: 90%;
     text-align: center;
@@ -185,24 +212,42 @@ main {
 
     h2 {
         margin-bottom: 15px;
+        font-size: 24px;
     }
 
     p {
-        margin-bottom: 10px;
-        font-size: 16px;
+        margin-bottom: 30px;
+        font-size: 20px;
     }
 
-    .modal-close-button {
+    .modal-confirm-button {
         background-color: #194747;
-        color: white;
+        color: #46c3c6;
+        font-size: 14px;
         padding: 10px 20px;
+        margin-right: 20px;
         border: none;
-        border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s;
 
         &:hover {
             background-color: #46c3c6;
+            color: #f9f9f9;
+        }
+    }
+
+    .modal-close-button {
+        background-color: #194747;
+        color: #46c3c6;
+        font-size: 14px;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: #46c3c6;
+            color: #f9f9f9;
         }
     }
 }
