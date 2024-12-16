@@ -1,12 +1,12 @@
 main {
     flex: 1;
-    margin-bottom: 30px;
 
     .meeting-planner {
         margin-left: 5%;
         margin-right: 5%;
         max-width: 90%;
         padding-top: 30px;
+        margin-bottom: 30px;
     
         &__header {
             .meeting-planner__title {
@@ -151,7 +151,7 @@ main {
                         &:hover {
                             background-color: white;
                             color: #46c3c6;
-                            font-size: 18px;
+                            // font-size: 18px;
                         }
                     }
     
@@ -168,23 +168,23 @@ main {
             }
         }
     
-        .meeting-planner__button {
-            background-color: #f9f9f9;
-            border: 1px solid black;
-            color: black;
-            font-size: 18px;
-            font-weight: bold;
-            padding: 10px 35px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            text-align: right;
+        // .meeting-planner__button {
+        //     background-color: #f9f9f9;
+        //     border: 1px solid black;
+        //     color: black;
+        //     font-size: 18px;
+        //     font-weight: bold;
+        //     padding: 10px 35px;
+        //     border-radius: 5px;
+        //     cursor: pointer;
+        //     transition: background-color 0.3s;
+        //     text-align: right;
     
-            &:hover {
-                background-color: #2fd0d4;
-                color: #f9f9f9;
-            }
-        }
+        //     &:hover {
+        //         background-color: #2fd0d4;
+        //         color: #f9f9f9;
+        //     }
+        // }
     }
 }
 
@@ -263,13 +263,42 @@ main {
         }
     }
 
+    .meeting-planner__container {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+
+        .meeting-planner__calendar .rbc-calendar {
+            font-size: 14px;
+        }
+
+        .meeting-planner__slots {
+            gap: 10px;
+            padding: 15px;
+
+            h3 {
+                font-size: 20px;
+            }
+
+            .slots-container {
+                grid-gap: 10px; /* Відстань між слотами */
+
+                .slot-card {
+                    width: 180px;
+
+                    &:hover {
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+    }
+
     .meeting-planner__button {
         font-size: 16px;
         padding: 8px 20px;
-    }
-
-    .meeting-planner__calendar .rbc-calendar {
-        font-size: 14px;
     }
 }
 

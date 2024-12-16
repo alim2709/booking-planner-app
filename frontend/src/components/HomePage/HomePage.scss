@@ -5,7 +5,7 @@
     // background-position: center;
     background-repeat: no-repeat;
     text-align: center;
-    color: white;
+    color: #f9f9f9;
     height: 93vh; // change
 
     .dashboard__overlay {
@@ -29,14 +29,14 @@
             font-weight: 700;
             margin-bottom: 10px;
             span {
-                color: #46c3c6;
+                color: #f9f9f9;
             }
         }
         .dashboard__meetings {
             font-weight: 700;
 
             span {
-                color: #46c3c6;
+                color: #f9f9f9;
             }
         }
     }
@@ -50,7 +50,7 @@
         z-index: 2;
 
         .dashboard__button {
-            color: white;
+            color: #f9f9f9;
             background: #46c3c6;
             font-size: 25px;
             font-weight: 600;
