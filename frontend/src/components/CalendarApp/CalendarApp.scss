@@ -1,12 +1,12 @@
 main {
     flex: 1;
-    margin-bottom: 30px;
 
     .meeting-planner {
         margin-left: 5%;
         margin-right: 5%;
         max-width: 90%;
         padding-top: 30px;
+        margin-bottom: 30px;
     
         &__header {
             .meeting-planner__title {
@@ -151,7 +151,7 @@ main {
                         &:hover {
                             background-color: white;
                             color: #46c3c6;
-                            font-size: 18px;
+                            // font-size: 18px;
                         }
                     }
     
