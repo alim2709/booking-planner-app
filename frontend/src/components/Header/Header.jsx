@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import headerImage from "../../assets/icons/BeCode_color_header.png";
-import user_logo from "../../assets/icons/circle.png";
+import user_logo from "../../assets/icons/company_logos_179664_1520259212.webp";
 import axiosInstance from "../../services/apiClient";
 import "./Header.scss";
 
